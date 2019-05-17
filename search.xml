@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>1-3 环境搭建</title>
-      <link href="/note/2019/05/16/golang/1-3-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-      <url>/note/2019/05/16/golang/1-3-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <title>go 1.25 类型转换</title>
+      <link href="/note/2019/05/17/golang/go-1-25-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
+      <url>/note/2019/05/17/golang/go-1-25-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<ul><li><a href="#不兼容类型">不兼容类型</a></li><li><a href="#in-转-string">in 转 string</a></li><li><a href="#string-转-int">string 转 int</a></li><li><a href="#字符类型本质就是整形">字符类型，本质就是整形</a></li><li><a href="#int-转-float32">int 转 float32</a></li><li><a href="#string到float64">string到float64</a></li><li><a href="#string到float32">string到float32</a></li><li><a href="#float64-转成-int">float64 转成 int</a></li></ul><h2 id="不兼容类型"><a href="#不兼容类型" class="headerlink" title="不兼容类型"></a>不兼容类型</h2><p>不能转换的类型，叫不兼容类型<br>如：bool不能转为int，整型也不能转为bool<br>0就是假，非0就是真</p><h2 id="in-转-string"><a href="#in-转-string" class="headerlink" title="in 转 string"></a>in 转 string</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;strconv&quot;</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    t := strconv.Itoa(123) //整型转字条串</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="string-转-int"><a href="#string-转-int" class="headerlink" title="string 转 int"></a>string 转 int</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i, _ := strconv.Atoi(&quot;100&quot;)</span><br><span class="line">fmt.Println(i)</span><br></pre></td></tr></table></figure><h2 id="字符类型，本质就是整形"><a href="#字符类型，本质就是整形" class="headerlink" title="字符类型，本质就是整形"></a>字符类型，本质就是整形</h2><p>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">var ch byte</span><br><span class="line">ch = &apos;a&apos;</span><br><span class="line">var t int</span><br><span class="line">t = int(ch) //类型转换，把ch的值取出来，转成int再赋值给t</span><br><span class="line">fmt.Println(&quot;t = &quot;, t)</span><br><span class="line">fmt.Printf(&quot;t = %c&quot;, t)  // 格式化为字符再输出</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="int-转-float32"><a href="#int-转-float32" class="headerlink" title="int 转 float32"></a>int 转 float32</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var sum int = 17</span><br><span class="line">var count int = 5</span><br><span class="line">var mean float32</span><br><span class="line"></span><br><span class="line">mean = float32(sum)/float32(count)</span><br><span class="line">fmt.Printf(&quot;mean 的值为: %f\n&quot;,mean)</span><br></pre></td></tr></table></figure><h2 id="string到float64"><a href="#string到float64" class="headerlink" title="string到float64"></a>string到float64</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float,err := strconv.ParseFloat(string,64)</span><br></pre></td></tr></table></figure><h2 id="string到float32"><a href="#string到float32" class="headerlink" title="string到float32"></a>string到float32</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float,err := strconv.ParseFloat(string,32)</span><br></pre></td></tr></table></figure><h2 id="float64-转成-int"><a href="#float64-转成-int" class="headerlink" title="float64 转成 int"></a>float64 转成 int</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a float64</span><br><span class="line">a = 1.9</span><br><span class="line">b := int(a)</span><br><span class="line">fmt.Println(a, b)</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -22,6 +22,8 @@
             
             <tag> go </tag>
             
+            <tag> golang </tag>
+            
         </tags>
       
     </entry>
@@ -29,23 +31,79 @@
     
     
     <entry>
-      <title>install confluence</title>
-      <link href="/note/2017/03/23/tools/install-confluence/"/>
-      <url>/note/2017/03/23/tools/install-confluence/</url>
+      <title>go 1.16 格式化输出和用户输入</title>
+      <link href="/note/2019/05/17/golang/go-1-16-%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E5%92%8C%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/"/>
+      <url>/note/2019/05/17/golang/go-1-16-%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E5%92%8C%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5/</url>
       
-        <content type="html"><![CDATA[<ul><li><a href="#准备工作">准备工作</a></li><li><a href="#启动confluence">启动confluence</a></li><li><a href="#破解">破解</a></li></ul><h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure><h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p><p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/note/blog_img/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p><p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p><p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p><p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p><h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p><p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p><p>4.把重新生成的文件重命名，并替换回原路径</p><p>5.单击复制key到剪贴板</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure><p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a></p>]]></content>
+        <content type="html"><![CDATA[<ul><li><a href="#格式化输出">格式化输出</a></li><li><a href="#接受用户输入">接受用户输入</a></li></ul><h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">a := 10</span><br><span class="line">b := &quot;abc&quot;</span><br><span class="line">c := &apos;a&apos;</span><br><span class="line">d := 3.14</span><br><span class="line">fmt.Printf(&quot;%T,%T,%T,%T\n&quot;, c, b, c, d) // %T 操作变量所属的类型</span><br><span class="line">//%d 整形格式</span><br><span class="line">//%s 字符串格式</span><br><span class="line">//%c 字符格式</span><br><span class="line">//%f 浮点格式</span><br><span class="line">// %v 自动匹配格式输出</span><br><span class="line">fmt.Printf(&quot;a = %d,b = %s,c = %c,d = %f\n&quot;, a, b, c, d)</span><br><span class="line">fmt.Printf(&quot;a = %v,b = %v,c = %v,d = %v\n&quot;, a, b, c, d)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="接受用户输入"><a href="#接受用户输入" class="headerlink" title="接受用户输入"></a>接受用户输入</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">var input_num int</span><br><span class="line">fmt.Printf(&quot;please input numbers:&quot;)</span><br><span class="line">  //阻塞，等待用户输入</span><br><span class="line">fmt.Scan(&amp;input_num) // 注意，这里是取input_num的内存地址</span><br><span class="line">fmt.Print(&quot;input_num = &quot;, input_num)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> 工具 </category>
+          <category> golang </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> confluence </tag>
+            <tag> go </tag>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>go 1.7 变量</title>
+      <link href="/note/2019/05/17/golang/go-1-7-%E5%8F%98%E9%87%8F/"/>
+      <url>/note/2019/05/17/golang/go-1-7-%E5%8F%98%E9%87%8F/</url>
+      
+        <content type="html"><![CDATA[<ul><li><a href="#变量名命名规范">变量名命名规范：</a></li><li><a href="#关键字">关键字</a></li><li><a href="#变量声明">变量声明</a></li><li><a href="#关于输出格式">关于输出格式</a></li><li><a href="#注意">注意：</a></li></ul><h2 id="变量名命名规范："><a href="#变量名命名规范：" class="headerlink" title="变量名命名规范："></a>变量名命名规范：</h2><p>1）组成只能是：字母，数字，下划线<br>2）不能以数字开头<br>3）名字不能是关键字<br>4）区分大小写</p><h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>下面列举了 Go 代码中会使用到的 25 个关键字或保留字：</p><table><thead><tr><th>——–</th><th>———–</th><th>——</th><th>———</th><th>——</th></tr></thead><tbody><tr><td>break</td><td>default</td><td>func</td><td>interface</td><td>select</td></tr><tr><td>case</td><td>defer</td><td>go</td><td>map</td><td>struct</td></tr><tr><td>chan</td><td>else</td><td>goto</td><td>package</td><td>switch</td></tr><tr><td>const</td><td>fallthrough</td><td>if</td><td>range</td><td>type</td></tr><tr><td>continue</td><td>for</td><td>import</td><td>return</td><td>var</td></tr></tbody></table><p>除了以上介绍的这些关键字，Go 语言还有 36 个预定义标识符：</p><table><thead><tr><th>——</th><th>——-</th><th>——-</th><th>——-</th><th>——</th><th>——-</th><th>———</th><th>———-</th><th>——-</th></tr></thead><tbody><tr><td>append</td><td>bool</td><td>byte</td><td>cap</td><td>close</td><td>complex</td><td>complex64</td><td>complex128</td><td>uint16</td></tr><tr><td>copy</td><td>false</td><td>float32</td><td>float64</td><td>imag</td><td>int</td><td>int8</td><td>int16</td><td>uint32</td></tr><tr><td>int32</td><td>int64</td><td>iota</td><td>len</td><td>make</td><td>new</td><td>nil</td><td>panic</td><td>uint64</td></tr><tr><td>print</td><td>println</td><td>real</td><td>recover</td><td>string</td><td>true</td><td>uint</td><td>uint8</td><td>uintptr</td></tr></tbody></table><h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p>1）声明格式：var 变量名  类型<br>2）变量声明后，必须要使用<br>3）只是声明，没有初始化的变量，默认值为0<br>4）同一个 {} 中的变量名是唯一的<br>5）可以同时声明多个变量，如var a,b,c int</p><p>变量声明举例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var a int</span><br><span class="line">var b int = 10</span><br><span class="line">c := 20 //自动推导类型</span><br><span class="line">i,j := 10,20  //多重变量赋值</span><br><span class="line">i,j = j,i  //变量交换</span><br><span class="line">var tmp</span><br><span class="line">tmp,_ = i,j // _为匿名变量，丢弃数据，不处理</span><br></pre></td></tr></table></figure></p><p>代码示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">a := 10</span><br><span class="line">fmt.Printf(&quot;c type is %T\n&quot;, a)</span><br><span class="line">// %T打印变量的所属的类型</span><br><span class="line">  // fmt.Printf 不换行输出，如果需要换行，则需要手动增加 \n 到输出之字符串的末尾</span><br><span class="line">  // fmt.Println 自动换行输出</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="关于输出格式"><a href="#关于输出格式" class="headerlink" title="关于输出格式"></a>关于输出格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%d 整形格式</span><br><span class="line">%s 字符串格式</span><br><span class="line">%c 字符格式</span><br><span class="line">%f 浮点格式</span><br><span class="line">%v 自动匹配格式输出</span><br></pre></td></tr></table></figure><h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在liteIDE中编译运行代码时，源代码的文件不能*_test.go结尾，</span><br><span class="line">否则编译不过，报错：</span><br><span class="line">go build &lt;dir&gt;: no non-test Go files in &lt;dir&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> golang </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> go </tag>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>go 1.3 环境搭建</title>
+      <link href="/note/2019/05/17/golang/go-1-3-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+      <url>/note/2019/05/17/golang/go-1-3-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      
+        <content type="html"><![CDATA[<ul><li><a href="#go开发环境搭建">go开发环境搭建</a><ul><li><a href="#下载go安装包">下载go安装包</a></li><li><a href="#下载开发ide我使用liteide">下载开发IDE，我使用liteide</a></li><li><a href="#安装下载好的包-解压到需要的路径即可">安装下载好的包–解压到需要的路径即可</a></li><li><a href="#设置系统环境变量和创建开发工程目录">设置系统环境变量和创建开发工程目录</a></li></ul></li></ul><h1 id="go开发环境搭建"><a href="#go开发环境搭建" class="headerlink" title="go开发环境搭建"></a>go开发环境搭建</h1><h2 id="下载go安装包"><a href="#下载go安装包" class="headerlink" title="下载go安装包"></a>下载go安装包</h2><p>官网下载页面：<br><a href="https://golang.org/dl/" target="_blank" rel="noopener">https://golang.org/dl/</a><br>中文社区下载页面：<br><a href="https://studygolang.com/dl" target="_blank" rel="noopener">https://studygolang.com/dl</a><br>linux系统，下载链接：<br><a href="https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz" target="_blank" rel="noopener">https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz</a><br>安装文档介绍：<br><a href="http://docs.studygolang.com/doc/install" target="_blank" rel="noopener">http://docs.studygolang.com/doc/install</a></p><h2 id="下载开发IDE，我使用liteIDE"><a href="#下载开发IDE，我使用liteIDE" class="headerlink" title="下载开发IDE，我使用liteIDE"></a>下载开发IDE，我使用liteIDE</h2><p>下载页面：<a href="http://liteide.org/cn/" target="_blank" rel="noopener">http://liteide.org/cn/</a><br>选一个下载地址：<a href="https://github.com/visualfc/liteide/releases/download/x36/liteidex36.linux64-qt5.5.1.tar.gz" target="_blank" rel="noopener">https://github.com/visualfc/liteide/releases/download/x36/liteidex36.linux64-qt5.5.1.tar.gz</a></p><h2 id="安装下载好的包–解压到需要的路径即可"><a href="#安装下载好的包–解压到需要的路径即可" class="headerlink" title="安装下载好的包–解压到需要的路径即可"></a>安装下载好的包–解压到需要的路径即可</h2><p>golang:<br>sudo tar -C /usr/local -xzf go1.12.5.linux-amd64.tar.gz</p><p>liteide:<br>sudo tar -C /usr/local -xzf liteidex36.linux64-qt5.5.1.tar.gz</p><h2 id="设置系统环境变量和创建开发工程目录"><a href="#设置系统环境变量和创建开发工程目录" class="headerlink" title="设置系统环境变量和创建开发工程目录"></a>设置系统环境变量和创建开发工程目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># 创建开发代码的工程目录，并追加到GOPATH环境变量</span><br><span class="line">mkdir -p ~/go/src</span><br><span class="line">echo &apos;export GOPATH=$HOME/go&apos; &gt;&gt; ~/.bashrc</span><br><span class="line"># 把go的安装目录追加到PATH环境变量</span><br><span class="line">echo &apos;export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin&apos; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br><span class="line"># 使用go version 验证go安装是否成功</span><br><span class="line">go version</span><br><span class="line"># 追加liteide的安装路径到PATH环境变量</span><br><span class="line"></span><br><span class="line">echo &apos;export PATH=/usr/local/liteide/bin:$PATH&apos; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure><h2 id="缺少libstdc-so-6而摄错"><a href="#缺少libstdc-so-6而摄错" class="headerlink" title="缺少libstdc++.so.6而摄错"></a>缺少libstdc++.so.6而摄错</h2><p>如果是在ubuntu14.04上运行liteIDE，可以会遇到如下报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">liteide: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `CXXABI_1.3.8&apos; not found (required by /usr/local/liteide/bin/../lib/libQt5Core.so.5)</span><br><span class="line">liteide: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `CXXABI_1.3.8&apos; not found (required by /usr/local/liteide/bin/../lib/libicui18n.so.55)</span><br><span class="line">liteide: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `CXXABI_1.3.8&apos; not found (required by /usr/local/liteide/bin/../lib/libicuuc.so.55)</span><br></pre></td></tr></table></figure></p><p>解决办法：<br>从ubuntu18的机器上找到libstdc++.so.6，复制到 /usr/local/liteide/lib/libstdc++.so.6<br>再启动即可</p><p>参考链接：<a href="https://github.com/visualfc/liteide/issues/961" target="_blank" rel="noopener">https://github.com/visualfc/liteide/issues/961</a></p><p>##go命令<br>go build xxx.go<br>此命令只会编译代码，不能运行可执行程序<br>go run xxx.go<br>此命令只会执行go文件，不会编译成可执行程序</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> golang </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> go </tag>
+            
+            <tag> golang </tag>
             
         </tags>
       
@@ -73,6 +131,31 @@
             <tag> hexo </tag>
             
             <tag> 3-hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>install confluence</title>
+      <link href="/note/2017/03/23/tools/install-confluence/"/>
+      <url>/note/2017/03/23/tools/install-confluence/</url>
+      
+        <content type="html"><![CDATA[<ul><li><a href="#准备工作">准备工作</a></li><li><a href="#启动confluence">启动confluence</a></li><li><a href="#破解">破解</a></li></ul><h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure><h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p><p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/note/blog_img/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p><p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p><p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p><p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p><h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p><p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p><p>4.把重新生成的文件重命名，并替换回原路径</p><p>5.单击复制key到剪贴板</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure><p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a><br>7.本文只是记录安装体验过程，商业用途请支持正版</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> confluence </tag>
             
         </tags>
       
