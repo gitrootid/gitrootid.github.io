@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <title>install confluence | 我的学习笔记</title>
-  <meta name="keywords" content=" confluence ">
-  <meta name="description" content="install confluence | 我的学习笔记">
+  <title>go 2.19 调用 | 我的学习笔记</title>
+  <meta name="keywords" content=" go , golang ">
+  <meta name="description" content="go 2.19 调用 | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
 <meta name="keywords" content="go,golang">
@@ -258,33 +258,33 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-tools/install-confluence" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-golang/go-2-19调用_" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">install confluence</h1>
+        <h1 class="article-title">go 2.19 调用</h1>
     
     <div class="article-meta">
-        
-        <span class="top"><a href="javascript:">置顶</a></span>
         
         
         
         <span class="book">
             
-            <a href="javascript:" data-rel="工具">工具</a>
+            <a href="javascript:" data-rel="golang">golang</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color1">confluence</a>
+            <a href="javascript:" class="color3">go</a>
+            
+            <a href="javascript:" class="color2">golang</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-05-17 11:13:48">2017-03-23 15:13</time>
+        创建时间:<time class="date" title="更新时间: 2019-05-21 14:46:48">2019-05-17 17:48</time>
         
     </div>
     <div class="article-meta">
@@ -317,7 +317,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动confluence"><span class="toc-text">启动confluence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解"><span class="toc-text">破解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#defer"><span class="toc-text">defer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#defer与匿名函数结合"><span class="toc-text">defer与匿名函数结合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取取命令行参数"><span class="toc-text">获取取命令行参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包的导入"><span class="toc-text">包的导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给导入的包起别名"><span class="toc-text">给导入的包起别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入包的使用"><span class="toc-text">导入包的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于包的约定"><span class="toc-text">关于包的约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下划线引包"><span class="toc-text">下划线引包</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -333,23 +333,27 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li><a href="#准备工作">准备工作</a></li>
-<li><a href="#启动confluence">启动confluence</a></li>
-<li><a href="#破解">破解</a></li>
+<li><a href="#defer">defer</a></li>
+<li><a href="#defer与匿名函数结合">defer与匿名函数结合</a></li>
+<li><a href="#获取取命令行参数">获取取命令行参数</a></li>
+<li><a href="#包的导入">包的导入</a></li>
+<li><a href="#给导入的包起别名">给导入的包起别名</a></li>
+<li><a href="#导入包的使用">导入包的使用</a></li>
+<li><a href="#关于包的约定">关于包的约定</a></li>
+<li><a href="#下划线引包">下划线引包</a></li>
 </ul>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure>
-<h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p>
-<p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/note/blog_img/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p>
-<p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p>
-<p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p>
-<p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p>
-<h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p>
-<p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p>
-<p>4.把重新生成的文件重命名，并替换回原路径</p>
-<p>5.单击复制key到剪贴板</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure>
-<p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a><br>7.本文只是记录安装体验过程，商业用途请支持正版</p>
+<h2 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h2><p>如果一个函数中有多个defer,它们会以LIFO(先进后出)的顺序调用，<br>即使其中有defer调用过程中发生错误，这些调用依旧会执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	defer fmt.Println(&quot;in defer&quot;) //延迟调用，在main函数结束前调用</span><br><span class="line">	fmt.Println(&quot;in main&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func test(x int) &#123;</span><br><span class="line">	fmt.Println(100 / x)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	defer fmt.Println(&quot;in defer&quot;) //延迟调用，在main函数结束前调用</span><br><span class="line">	fmt.Println(&quot;in main&quot;)</span><br><span class="line">	defer fmt.Println(&quot;aa&quot;)</span><br><span class="line">	defer test(0) //这个调用会出现panic，但是后面的defer调用依旧会执行</span><br><span class="line">	defer fmt.Println(&quot;bb&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="defer与匿名函数结合"><a href="#defer与匿名函数结合" class="headerlink" title="defer与匿名函数结合"></a>defer与匿名函数结合</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	a := 10</span><br><span class="line">	b := 20</span><br><span class="line">	defer func(a, b int) &#123;</span><br><span class="line">		fmt.Println(&quot;in defer func a=&quot;, a)</span><br><span class="line">		fmt.Println(&quot;in defer func b=&quot;, b)</span><br><span class="line">	&#125;(a, b) //只是传入参数，但未执行，所以执行结果是a=10,b=20,都是未改变的值</span><br><span class="line"></span><br><span class="line">	a = 110</span><br><span class="line">	b = 220</span><br><span class="line">	fmt.Println(&quot;in main a=&quot;, a)</span><br><span class="line">	fmt.Println(&quot;in main b=&quot;, b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	a := 10</span><br><span class="line">	b := 20</span><br><span class="line">	defer func() &#123;</span><br><span class="line">		fmt.Println(&quot;in defer func a=&quot;, a)</span><br><span class="line">		fmt.Println(&quot;in defer func b=&quot;, b)</span><br><span class="line">	&#125;() // 匿名调用 ，调用的是最近变量，所以这里是调用的改变后的a,b的值:110,220</span><br><span class="line"></span><br><span class="line">	a = 110</span><br><span class="line">	b = 220</span><br><span class="line">	fmt.Println(&quot;in main a=&quot;, a)</span><br><span class="line">	fmt.Println(&quot;in main b=&quot;, b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取取命令行参数"><a href="#获取取命令行参数" class="headerlink" title="获取取命令行参数"></a>获取取命令行参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;os&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	list := os.Args</span><br><span class="line">	for i, data := range list &#123;</span><br><span class="line">		fmt.Printf(&quot;os.Args[%v]= %v\n&quot;, i, data)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="包的导入"><a href="#包的导入" class="headerlink" title="包的导入"></a>包的导入</h2><p>导入的包必须使用，否则编译不能通过</p>
+<h2 id="给导入的包起别名"><a href="#给导入的包起别名" class="headerlink" title="给导入的包起别名"></a>给导入的包起别名</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	io &quot;fmt&quot; //别名放于包名之前，用空格分隔</span><br><span class="line">	&quot;os&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	list := os.Args</span><br><span class="line">	for i, data := range list &#123;</span><br><span class="line">		io.Printf(&quot;os.Args[%v]= %v\n&quot;, i, data)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="导入包的使用"><a href="#导入包的使用" class="headerlink" title="导入包的使用"></a>导入包的使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	. &quot;fmt&quot; // 使用点代替导入的包史，引用时直接使用不用再写包名</span><br><span class="line">	. &quot;os&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	list := Args // 不写包名，直接使用</span><br><span class="line">	for i, data := range list &#123;</span><br><span class="line">		Printf(&quot;os.Args[%v]= %v\n&quot;, i, data)  // 不写包名</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关于包的约定"><a href="#关于包的约定" class="headerlink" title="关于包的约定"></a>关于包的约定</h2><p>1）分文件编程（多个源文件），必须放在src目录<br>2）设置GOPATH环境变量，$GOPATH环境变量必须包括到src的上一级目录<br>3) 同一个目录，包名必须一样<br>4）go env查看go相关的环境路径<br>5) 同一个目录，调用别的文件的函数，无需包名引用，直接调用即可</p>
+<h2 id="下划线引包"><a href="#下划线引包" class="headerlink" title="下划线引包"></a>下划线引包</h2><p>有时，用户可能需要导入一个包，但是不需要引用这个包里的标识符，在这种情况下，可以使用空白标识符_来重命名这个导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import (</span><br><span class="line">  _ &quot;fmt&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<p>这个操作其实是引用该包，而不直接使用包里的函数，而是调用了该包的init函数</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
@@ -363,12 +367,12 @@
 
 
 <div class="article_copyright">
-    <p><span>文章标题:</span>install confluence</p>
+    <p><span>文章标题:</span>go 2.19 调用</p>
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="shawn">shawn</a></p>
-    <p><span>发布时间:</span>2017-03-23, 15:13:47</p>
-    <p><span>最后更新:</span>2019-05-17, 11:13:48</p>
-    <span>原始链接:</span><a class="post-url" href="/note/2017/03/23/tools/install-confluence/" title="install confluence">https://gitrootid.github.io/note/2017/03/23/tools/install-confluence/</a>
+    <p><span>发布时间:</span>2019-05-17, 17:48:26</p>
+    <p><span>最后更新:</span>2019-05-21, 14:46:48</p>
+    <span>原始链接:</span><a class="post-url" href="/note/2019/05/17/golang/go-2-19调用_/" title="go 2.19 调用">https://gitrootid.github.io/note/2019/05/17/golang/go-2-19调用_/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

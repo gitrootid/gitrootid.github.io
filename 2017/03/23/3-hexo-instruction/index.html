@@ -6,18 +6,18 @@
   <meta name="keywords" content=" hexo , 3-hexo ">
   <meta name="description" content="3-hexo使用说明 | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="格式化输出 接受用户输入  格式化输出123456789101112131415161718192021package mainimport (	&amp;quot;fmt&amp;quot;)func main() &amp;#123;	a := 10	b := &amp;quot;abc&amp;quot;	c := &amp;apos;a&amp;apos;	d := 3.14	fmt.Printf(&amp;quot;%T,%T,%T,%T\n&amp;qu">
+<meta name="description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
 <meta name="keywords" content="go,golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go 1.16 格式化输出和用户输入">
-<meta property="og:url" content="https://gitrootid.github.io/note/2019/05/17/golang/go-1-16-格式化输出和用户输入/index.html">
+<meta property="og:title" content="go 1.31 流程控制">
+<meta property="og:url" content="https://gitrootid.github.io/note/2019/05/17/golang/go-1-31-流程控制_/index.html">
 <meta property="og:site_name" content="我的学习笔记">
-<meta property="og:description" content="格式化输出 接受用户输入  格式化输出123456789101112131415161718192021package mainimport (	&amp;quot;fmt&amp;quot;)func main() &amp;#123;	a := 10	b := &amp;quot;abc&amp;quot;	c := &amp;apos;a&amp;apos;	d := 3.14	fmt.Printf(&amp;quot;%T,%T,%T,%T\n&amp;qu">
+<meta property="og:description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-17T08:48:33.832Z">
+<meta property="og:updated_time" content="2019-05-21T06:42:41.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="go 1.16 格式化输出和用户输入">
-<meta name="twitter:description" content="格式化输出 接受用户输入  格式化输出123456789101112131415161718192021package mainimport (	&amp;quot;fmt&amp;quot;)func main() &amp;#123;	a := 10	b := &amp;quot;abc&amp;quot;	c := &amp;apos;a&amp;apos;	d := 3.14	fmt.Printf(&amp;quot;%T,%T,%T,%T\n&amp;qu">
+<meta name="twitter:title" content="go 1.31 流程控制">
+<meta name="twitter:description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -137,7 +137,7 @@
     </div>
     <div><a style="border-right: 1px solid #fff; width: 49%" class="about site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="6">
+<input type="hidden" id="yelog_site_posts_number" value="9">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -201,6 +201,16 @@
     
     <nav id="title-list-nav">
         
+        <a class="golang " href="/note/2019/05/17/golang/go-1-03-环境搭建/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.03 环境搭建">go 1.03 环境搭建</span>
+            <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/note/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
+            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
+        </a>
+        
         <a class="golang " href="/note/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
             <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
@@ -211,14 +221,19 @@
             <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-3-环境搭建/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.3 环境搭建">go 1.3 环境搭建</span>
-            <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
+        <a class="golang " href="/note/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.31 流程控制">go 1.31 流程控制</span>
+            <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-7-变量/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.7 变量">go 1.7 变量</span>
-            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
+        <a class="golang " href="/note/2019/05/17/golang/go-2-04-函数_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 2.04 函数">go 2.04 函数</span>
+            <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/note/2019/05/17/golang/go-2-19调用_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 2.19 调用">go 2.19 调用</span>
+            <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
         <a id="top" class="工具 " href="/note/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>

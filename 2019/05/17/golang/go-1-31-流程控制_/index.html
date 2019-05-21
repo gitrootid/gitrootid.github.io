@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <title>install confluence | 我的学习笔记</title>
-  <meta name="keywords" content=" confluence ">
-  <meta name="description" content="install confluence | 我的学习笔记">
+  <title>go 1.31 流程控制 | 我的学习笔记</title>
+  <meta name="keywords" content=" go , golang ">
+  <meta name="description" content="go 1.31 流程控制 | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
 <meta name="keywords" content="go,golang">
@@ -258,33 +258,33 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-tools/install-confluence" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-golang/go-1-31-流程控制_" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">install confluence</h1>
+        <h1 class="article-title">go 1.31 流程控制</h1>
     
     <div class="article-meta">
-        
-        <span class="top"><a href="javascript:">置顶</a></span>
         
         
         
         <span class="book">
             
-            <a href="javascript:" data-rel="工具">工具</a>
+            <a href="javascript:" data-rel="golang">golang</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color1">confluence</a>
+            <a href="javascript:" class="color3">go</a>
+            
+            <a href="javascript:" class="color2">golang</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-05-17 11:13:48">2017-03-23 15:13</time>
+        创建时间:<time class="date" title="更新时间: 2019-05-21 14:42:41">2019-05-17 17:48</time>
         
     </div>
     <div class="article-meta">
@@ -317,7 +317,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动confluence"><span class="toc-text">启动confluence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解"><span class="toc-text">破解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#if语句"><span class="toc-text">if语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#switch"><span class="toc-text">switch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for循环"><span class="toc-text">for循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#continue跳出本次循环，进入下一次循环"><span class="toc-text">continue跳出本次循环，进入下一次循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#break跳出循环，如果多层嵌套循环，跳出最近的那个内循环"><span class="toc-text">break跳出循环，如果多层嵌套循环，跳出最近的那个内循环</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -333,24 +333,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li><a href="#准备工作">准备工作</a></li>
-<li><a href="#启动confluence">启动confluence</a></li>
-<li><a href="#破解">破解</a></li>
+<li><a href="#if语句">if语句</a></li>
+<li><a href="#switch">switch</a></li>
+<li><a href="#for循环">for循环</a></li>
+<li><a href="#continue跳出本次循环进入下一次循环">continue跳出本次循环，进入下一次循环</a></li>
+<li><a href="#break跳出循环如果多层嵌套循环跳出最近的那个内循环">break跳出循环，如果多层嵌套循环，跳出最近的那个内循环</a></li>
 </ul>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure>
-<h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p>
-<p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/note/blog_img/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p>
-<p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p>
-<p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p>
-<p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p>
-<h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p>
-<p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p>
-<p>4.把重新生成的文件重命名，并替换回原路径</p>
-<p>5.单击复制key到剪贴板</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure>
-<p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a><br>7.本文只是记录安装体验过程，商业用途请支持正版</p>
-
+<h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">	/* 定义局部变量 */</span><br><span class="line">	var d int = 10</span><br><span class="line"></span><br><span class="line">	/* 使用 if 语句判断布尔表达式 */</span><br><span class="line">	if d == 10 &#123;</span><br><span class="line">		/* 如果条件为 true 则执行以下语句 */</span><br><span class="line">		fmt.Println(&quot;d == 10&quot;)</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		fmt.Println(&quot;d != 10&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">  //if 中的局部变量</span><br><span class="line">  // d的作用域只在if的范围内有效</span><br><span class="line">  if d:=10 ;d == 10 &#123;</span><br><span class="line">    fmt.Println(&quot;d == 10&quot;)</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    fmt.Println(&quot;d != 10&quot;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var e int = 9</span><br><span class="line">if e == 10 &#123;</span><br><span class="line">  fmt.Println(&quot;d == 10&quot;)</span><br><span class="line">&#125; else if e &gt; 10 &#123;</span><br><span class="line">  fmt.Println(&quot;e &gt; 10&quot;)</span><br><span class="line">&#125; else if e &lt; 10 &#123;</span><br><span class="line">  fmt.Println(&quot;e &lt; 10&quot;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  fmt.Println(&quot;这是不可能的&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	var num int</span><br><span class="line">	fmt.Printf(&quot;please input floor number:&quot;)</span><br><span class="line">	fmt.Scan(&amp;num)</span><br><span class="line">	switch num &#123; //switch 后面是变量本身</span><br><span class="line">	// switch num := 5; num &#123; //switch 支持一个初始化语句，用;分隔</span><br><span class="line">	case 1, 5:</span><br><span class="line">		fmt.Println(&quot;case is 1 or 5&quot;)</span><br><span class="line">		fallthrough // 不跳出switch语句，后面的条件无条件地执行</span><br><span class="line">	case 2:</span><br><span class="line">		fmt.Println(&quot;case is :&quot;, 2)</span><br><span class="line">	case 3:</span><br><span class="line">		fmt.Println(&quot;case is :&quot;, 3)</span><br><span class="line">	case 4:</span><br><span class="line">		fmt.Println(&quot;case is :&quot;, 4)</span><br><span class="line">	default:</span><br><span class="line">		fmt.Println(&quot;this is default case&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// case 判断一个表达式</span><br><span class="line">	var grade string</span><br><span class="line">	fmt.Printf(&quot;please input grade:&quot;)</span><br><span class="line">	fmt.Scan(&amp;grade)</span><br><span class="line">	switch &#123;</span><br><span class="line">	case grade == &quot;A&quot;:</span><br><span class="line">		fmt.Printf(&quot;优秀!\n&quot;)</span><br><span class="line">	case grade == &quot;B&quot;, grade == &quot;C&quot;:</span><br><span class="line">		fmt.Printf(&quot;良好\n&quot;)</span><br><span class="line">		fallthrough // 不跳出switch语句，下一句case无条件地执行</span><br><span class="line">	case grade == &quot;D&quot;:</span><br><span class="line">		fmt.Printf(&quot;及格\n&quot;)</span><br><span class="line">		fallthrough // 不跳出switch语句，下一句case无条件地执行</span><br><span class="line">	case grade == &quot;F&quot;:</span><br><span class="line">		break //跳出switch</span><br><span class="line">		fmt.Printf(&quot;不及格\n&quot;)</span><br><span class="line">	default:</span><br><span class="line">		fmt.Printf(&quot;差\n&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(&quot;你输入的grade:%s\n&quot;, grade)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><p>格式：<br>for 初始条件；判断条件；条件变化 {</p>
+<p>}<br>或使用range迭代，下标从0开始<br>for index,data := range iterable_obj {</p>
+<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sum := 0</span><br><span class="line">for i := 1; i &lt; 10; i++ &#123;</span><br><span class="line">  sum = sum + i</span><br><span class="line">  fmt.Println(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str := &quot;abc&quot;</span><br><span class="line">for i, data := range str &#123;</span><br><span class="line">  fmt.Printf(&quot;The No. %d element is: %c\n&quot;, i, data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用_丢弃返回的下标<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str := &quot;abc&quot;</span><br><span class="line">for _, data := range str &#123;</span><br><span class="line">  fmt.Println(data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>丢弃返回元素，再通过下标取元素<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str := &quot;abc&quot;</span><br><span class="line">for i, _ := range str &#123;</span><br><span class="line">		fmt.Printf(&quot;%c\n&quot;, str[i])</span><br><span class="line">&#125;</span><br><span class="line">//等价于：</span><br><span class="line">for i := range str &#123;</span><br><span class="line">		fmt.Printf(&quot;%c\n&quot;, str[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>for后面不写任何内容，表示条件永远为值，死循环<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for &#123;</span><br><span class="line">  fmt.Println(i)</span><br><span class="line">  if i == 99999 &#123;</span><br><span class="line">    break</span><br><span class="line">  &#125;</span><br><span class="line">  i++</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="continue跳出本次循环，进入下一次循环"><a href="#continue跳出本次循环，进入下一次循环" class="headerlink" title="continue跳出本次循环，进入下一次循环"></a>continue跳出本次循环，进入下一次循环</h2><h2 id="break跳出循环，如果多层嵌套循环，跳出最近的那个内循环"><a href="#break跳出循环，如果多层嵌套循环，跳出最近的那个内循环" class="headerlink" title="break跳出循环，如果多层嵌套循环，跳出最近的那个内循环"></a>break跳出循环，如果多层嵌套循环，跳出最近的那个内循环</h2>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
     </div>
@@ -363,12 +362,12 @@
 
 
 <div class="article_copyright">
-    <p><span>文章标题:</span>install confluence</p>
+    <p><span>文章标题:</span>go 1.31 流程控制</p>
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="shawn">shawn</a></p>
-    <p><span>发布时间:</span>2017-03-23, 15:13:47</p>
-    <p><span>最后更新:</span>2019-05-17, 11:13:48</p>
-    <span>原始链接:</span><a class="post-url" href="/note/2017/03/23/tools/install-confluence/" title="install confluence">https://gitrootid.github.io/note/2017/03/23/tools/install-confluence/</a>
+    <p><span>发布时间:</span>2019-05-17, 17:48:26</p>
+    <p><span>最后更新:</span>2019-05-21, 14:42:41</p>
+    <span>原始链接:</span><a class="post-url" href="/note/2019/05/17/golang/go-1-31-流程控制_/" title="go 1.31 流程控制">https://gitrootid.github.io/note/2019/05/17/golang/go-1-31-流程控制_/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
