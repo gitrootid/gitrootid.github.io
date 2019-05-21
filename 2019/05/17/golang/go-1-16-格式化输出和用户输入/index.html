@@ -123,9 +123,9 @@
 <ul>
     <li class="all active">全部文章</li>
     
-    <li data-rel="工具"> 工具 </li>
-    
     <li data-rel="golang"> golang </li>
+    
+    <li data-rel="工具"> 工具 </li>
     
 </ul>
 <div class="left-bottom">
@@ -172,6 +172,14 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">go</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color2">golang</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">hexo</a>
     </li>
     
@@ -181,14 +189,6 @@
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color1">confluence</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">go</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">golang</a>
     </li>
     
     <div class="clearfix"></div>
@@ -201,14 +201,9 @@
     
     <nav id="title-list-nav">
         
-        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
-            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
-            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
-        </a>
-        
-        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
-            <span class="post-title" title="install confluence">install confluence</span>
-            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
+            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
         </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-03-环境搭建/" data-tag="go,golang" data-author>
@@ -216,19 +211,14 @@
             <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
-            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
+        <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
+            <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
         </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
             <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
-        </a>
-        
-        <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
-            <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
         </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
@@ -244,6 +234,16 @@
         <a class="golang " href="/2019/05/17/golang/go-2-19调用_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 2.19 调用">go 2.19 调用</span>
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
+            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
+            <span class="post-title" title="install confluence">install confluence</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
         </a>
         
     </nav>
@@ -433,7 +433,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#hexo','#3-hexo','#confluence','#go','#golang',],
+            'data': ['#go','#golang','#hexo','#3-hexo','#confluence',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
@@ -571,7 +571,7 @@
         width: 100%;
         height: 100%;
         opacity: 0.1;
-        background: url("http://img.xiangzhangshugongyi.com/FlSExUGfRSaqxkK5v42CpuI-tXAL.jpg");
+        background: url("https://github.com/gitrootid/assets/timg.jpeg");
         background-repeat: no-repeat;
         background-position: 50% 0;
         -ms-background-size: cover;
