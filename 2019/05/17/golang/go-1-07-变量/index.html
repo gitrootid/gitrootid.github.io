@@ -10,7 +10,7 @@
 <meta name="keywords" content="go,golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="go 1.31 流程控制">
-<meta property="og:url" content="https://gitrootid.github.io/note/2019/05/17/golang/go-1-31-流程控制_/index.html">
+<meta property="og:url" content="https://gitrootid.github.io/2019/05/17/golang/go-1-31-流程控制_/index.html">
 <meta property="og:site_name" content="我的学习笔记">
 <meta property="og:description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
 <meta property="og:locale" content="default">
@@ -22,15 +22,15 @@
 
 <link rel="icon" href="/img/avatar.jpg">
 
-<link href="/note/css/style.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 
-<link href="/note/css/hl_theme/atom-light.css" rel="stylesheet">
+<link href="/css/hl_theme/atom-light.css" rel="stylesheet">
 
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="/note/js/jquery.autocomplete.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js"></script>
 
 <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script>
@@ -43,20 +43,20 @@
 
 <script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-<script src="/note/js/iconfont.js"></script>
+<script src="/js/iconfont.js"></script>
 
 </head>
 <div style="display: none">
   <input class="theme_disqus_on" value="false">
   <input class="theme_preload_comment" value="false">
-  <input class="theme_blog_path" value="/note">
+  <input class="theme_blog_path" value>
 </div>
 
 <body>
 <aside class="nav">
     <div class="nav-left">
-        <a href="/note/" class="avatar_target">
-    <img class="avatar" src="/note/img/avatar.jpg">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg">
 </a>
 <div class="author">
     <span>shawn</span>
@@ -201,47 +201,47 @@
     
     <nav id="title-list-nav">
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-03-环境搭建/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-1-03-环境搭建/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.03 环境搭建">go 1.03 环境搭建</span>
             <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
             <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
             <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
             <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.31 流程控制">go 1.31 流程控制</span>
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-2-04-函数_/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-2-04-函数_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 2.04 函数">go 2.04 函数</span>
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/note/2019/05/17/golang/go-2-19调用_/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-2-19调用_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 2.19 调用">go 2.19 调用</span>
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
-        <a id="top" class="工具 " href="/note/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
+        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
             <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
             <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
         </a>
         
-        <a id="top" class="工具 " href="/note/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
+        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
             <span class="post-title" title="install confluence">install confluence</span>
             <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
         </a>
@@ -474,7 +474,7 @@
     <p><span>本文作者:</span><a href="javascript:void(0)" title="shawn">shawn</a></p>
     <p><span>发布时间:</span>2019-05-17, 11:44:29</p>
     <p><span>最后更新:</span>2019-05-21, 14:40:10</p>
-    <span>原始链接:</span><a class="post-url" href="/note/2019/05/17/golang/go-1-07-变量/" title="go 1.07 变量">https://gitrootid.github.io/note/2019/05/17/golang/go-1-07-变量/</a>
+    <span>原始链接:</span><a class="post-url" href="/2019/05/17/golang/go-1-07-变量/" title="go 1.07 变量">https://gitrootid.github.io/2019/05/17/golang/go-1-07-变量/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -489,7 +489,7 @@
         var gitalk = new Gitalk({
             clientID: '29798ac1e71829a1e0de',
             clientSecret: '4ca04de3b5f7967386b31810a9acd6ef304c6ae8',
-            repo: 'note',
+            repo: 'gitrootid.github.io',
             owner: 'gitrootid',
             admin: ['gitrootid'],
             id: location.pathname,
@@ -532,8 +532,8 @@
     </div>
     <div class="shang_payimg">
         <div class="pay_img">
-            <img src="/note/img/alipay.jpg" class="alipay" title="扫码支持">
-            <img src="/note/img/weixin.jpg" class="weixin" title="扫码支持">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
         </div>
     </div>
     <div class="shang_payselect">
@@ -545,7 +545,7 @@
 </body>
 <script src="//cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
 
-<script src="/note/js/script.js"></script>
+<script src="/js/script.js"></script>
 <script>
     var img_resize = 'default';
     /*作者、标签的自动补全*/
