@@ -6,18 +6,18 @@
   <meta name="keywords" content=" confluence ">
   <meta name="description" content="install confluence | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
+<meta name="description" content="普通函数 不定参数函数 固定参数与不定参数函数同时写时，形参只能放最后 有返回值函数,给返回值起变量名 有返回值函数,未给返回值起变量名 递归函数调用流程 使用type定义函数为一种类型 匿名函数  函数定义说明：1）函数由关键字func开始声明2）函数首字母小写即为private, 首字母大写即为public3）不支持默认参数 普通函数1234567891011func MyFunc01(a,">
 <meta name="keywords" content="go,golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go 1.31 流程控制">
-<meta property="og:url" content="https://gitrootid.github.io/2019/05/17/golang/go-1-31-流程控制_/index.html">
+<meta property="og:title" content="go 2.04 函数">
+<meta property="og:url" content="https://gitrootid.github.io/2019/05/17/golang/go-2-04-函数_/index.html">
 <meta property="og:site_name" content="我的学习笔记">
-<meta property="og:description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
+<meta property="og:description" content="普通函数 不定参数函数 固定参数与不定参数函数同时写时，形参只能放最后 有返回值函数,给返回值起变量名 有返回值函数,未给返回值起变量名 递归函数调用流程 使用type定义函数为一种类型 匿名函数  函数定义说明：1）函数由关键字func开始声明2）函数首字母小写即为private, 首字母大写即为public3）不支持默认参数 普通函数1234567891011func MyFunc01(a,">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T06:42:41.785Z">
+<meta property="og:updated_time" content="2019-05-21T06:43:14.941Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="go 1.31 流程控制">
-<meta name="twitter:description" content="if语句 switch for循环 continue跳出本次循环，进入下一次循环 break跳出循环，如果多层嵌套循环，跳出最近的那个内循环  if语句12345678910111213141516171819202122func main() &amp;#123;	/* 定义局部变量 */	var d int = 10	/* 使用 if 语句判断布尔表达式 */	if d == 10 &amp;#123;">
+<meta name="twitter:title" content="go 2.04 函数">
+<meta name="twitter:description" content="普通函数 不定参数函数 固定参数与不定参数函数同时写时，形参只能放最后 有返回值函数,给返回值起变量名 有返回值函数,未给返回值起变量名 递归函数调用流程 使用type定义函数为一种类型 匿名函数  函数定义说明：1）函数由关键字func开始声明2）函数首字母小写即为private, 首字母大写即为public3）不支持默认参数 普通函数1234567891011func MyFunc01(a,">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -137,7 +137,7 @@
     </div>
     <div><a style="border-right: 1px solid #fff; width: 49%" class="about site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="9">
+<input type="hidden" id="yelog_site_posts_number" value="11">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -211,14 +211,14 @@
             <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
-            <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
-        </a>
-        
         <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
             <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
+            <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
         </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
@@ -244,6 +244,16 @@
         <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
             <span class="post-title" title="install confluence">install confluence</span>
             <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/22/golang/go-3-08-数组/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.08 数组">go 3.08 数组</span>
+            <span class="post-date" title="2019-05-22 10:43:26">2019/05/22</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/21/golang/go-3-02-指针/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.02 指针">go 3.02 指针</span>
+            <span class="post-date" title="2019-05-21 16:23:26">2019/05/21</span>
         </a>
         
     </nav>
@@ -381,8 +391,8 @@
 <script type="text/javascript">
     $.getScript('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function () {
         var gitalk = new Gitalk({
-            clientID: '29798ac1e71829a1e0de',
-            clientSecret: '4ca04de3b5f7967386b31810a9acd6ef304c6ae8',
+            clientID: '20d8958f260ff5156351',
+            clientSecret: 'f6fee33b86bef86a031dac000a771dbdad9e78a8',
             repo: 'gitrootid.github.io',
             owner: 'gitrootid',
             admin: ['gitrootid'],
