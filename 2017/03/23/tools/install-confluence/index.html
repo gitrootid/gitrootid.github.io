@@ -6,18 +6,18 @@
   <meta name="keywords" content=" confluence ">
   <meta name="description" content="install confluence | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="普通函数 不定参数函数 固定参数与不定参数函数同时写时，形参只能放最后 有返回值函数,给返回值起变量名 有返回值函数,未给返回值起变量名 递归函数调用流程 使用type定义函数为一种类型 匿名函数  函数定义说明：1）函数由关键字func开始声明2）函数首字母小写即为private, 首字母大写即为public3）不支持默认参数 普通函数1234567891011func MyFunc01(a,">
+<meta name="description" content="数组 基本操作 二维数组 数组支持比较 同类型且同长度的数组可以赋值 随机数的使用 冒泡排序代码的实现 数组作函数参数 数组指针作函数参数 数组与切片的区别 切片的创建 切片截取 append函数的使用 copy函数的使用 切片作函数参数 取出数字的每一位  数组数组是同一个类型的数据集合 基本操作初始化与遍列12345678910111213141516171819202122232425fu">
 <meta name="keywords" content="go,golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go 2.04 函数">
-<meta property="og:url" content="https://gitrootid.github.io/2019/05/17/golang/go-2-04-函数_/index.html">
+<meta property="og:title" content="go 3.08 数组">
+<meta property="og:url" content="https://gitrootid.github.io/2019/05/22/golang/go-3-08-数组_/index.html">
 <meta property="og:site_name" content="我的学习笔记">
-<meta property="og:description" content="普通函数 不定参数函数 固定参数与不定参数函数同时写时，形参只能放最后 有返回值函数,给返回值起变量名 有返回值函数,未给返回值起变量名 递归函数调用流程 使用type定义函数为一种类型 匿名函数  函数定义说明：1）函数由关键字func开始声明2）函数首字母小写即为private, 首字母大写即为public3）不支持默认参数 普通函数1234567891011func MyFunc01(a,">
+<meta property="og:description" content="数组 基本操作 二维数组 数组支持比较 同类型且同长度的数组可以赋值 随机数的使用 冒泡排序代码的实现 数组作函数参数 数组指针作函数参数 数组与切片的区别 切片的创建 切片截取 append函数的使用 copy函数的使用 切片作函数参数 取出数字的每一位  数组数组是同一个类型的数据集合 基本操作初始化与遍列12345678910111213141516171819202122232425fu">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-21T06:43:14.941Z">
+<meta property="og:updated_time" content="2019-05-25T14:56:57.266Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="go 2.04 函数">
-<meta name="twitter:description" content="普通函数 不定参数函数 固定参数与不定参数函数同时写时，形参只能放最后 有返回值函数,给返回值起变量名 有返回值函数,未给返回值起变量名 递归函数调用流程 使用type定义函数为一种类型 匿名函数  函数定义说明：1）函数由关键字func开始声明2）函数首字母小写即为private, 首字母大写即为public3）不支持默认参数 普通函数1234567891011func MyFunc01(a,">
+<meta name="twitter:title" content="go 3.08 数组">
+<meta name="twitter:description" content="数组 基本操作 二维数组 数组支持比较 同类型且同长度的数组可以赋值 随机数的使用 冒泡排序代码的实现 数组作函数参数 数组指针作函数参数 数组与切片的区别 切片的创建 切片截取 append函数的使用 copy函数的使用 切片作函数参数 取出数字的每一位  数组数组是同一个类型的数据集合 基本操作初始化与遍列12345678910111213141516171819202122232425fu">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -123,9 +123,9 @@
 <ul>
     <li class="all active">全部文章</li>
     
-    <li data-rel="golang"> golang </li>
-    
     <li data-rel="工具"> 工具 </li>
+    
+    <li data-rel="golang"> golang </li>
     
 </ul>
 <div class="left-bottom">
@@ -172,11 +172,7 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">go</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">golang</a>
+        <a href="javascript:" class="color1">confluence</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -188,7 +184,11 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">confluence</a>
+        <a href="javascript:" class="color3">go</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color2">golang</a>
     </li>
     
     <div class="clearfix"></div>
@@ -200,6 +200,16 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
+            <span class="post-title" title="install confluence">install confluence</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
+            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-03-环境搭建/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.03 环境搭建">go 1.03 环境搭建</span>
@@ -231,29 +241,19 @@
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/2019/05/17/golang/go-2-19调用_/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/17/golang/go-2-19-调用_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 2.19 调用">go 2.19 调用</span>
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
-        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
-            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
-            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
-        </a>
-        
-        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
-            <span class="post-title" title="install confluence">install confluence</span>
-            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
-        </a>
-        
-        <a class="golang " href="/2019/05/22/golang/go-3-08-数组/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 3.08 数组">go 3.08 数组</span>
-            <span class="post-date" title="2019-05-22 10:43:26">2019/05/22</span>
-        </a>
-        
-        <a class="golang " href="/2019/05/21/golang/go-3-02-指针/" data-tag="go,golang" data-author>
+        <a class="golang " href="/2019/05/21/golang/go-3-02-指针_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 3.02 指针">go 3.02 指针</span>
             <span class="post-date" title="2019-05-21 16:23:26">2019/05/21</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/22/golang/go-3-08-数组_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.08 数组">go 3.08 数组</span>
+            <span class="post-date" title="2019-05-22 10:43:26">2019/05/22</span>
         </a>
         
     </nav>
@@ -455,7 +455,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#go','#golang','#hexo','#3-hexo','#confluence',],
+            'data': ['#confluence','#hexo','#3-hexo','#go','#golang',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
