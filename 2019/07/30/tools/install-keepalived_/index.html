@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="我的学习笔记">
 <meta property="og:description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-30T08:17:43.708Z">
+<meta property="og:updated_time" content="2019-07-30T08:40:16.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="install keepalived">
 <meta name="twitter:description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
@@ -225,11 +225,6 @@
             <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
-            <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
-        </a>
-        
         <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
             <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
@@ -238,6 +233,11 @@
         <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
             <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
+            <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
         </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
@@ -343,7 +343,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-07-30 16:17:43">2019-07-30 14:57</time>
+        创建时间:<time class="date" title="更新时间: 2019-07-30 16:40:16">2019-07-30 14:57</time>
         
     </div>
     <div class="article-meta">
@@ -448,7 +448,7 @@
 <h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>1.模拟一切OK的情况<br>curl 10.0.1.200<br>请求N次，返回的结果都为real2的主机名，为符合预期结果：同一时间，只能一台服务器提供服务<br>2.模拟real2的nginx异常退出的情况<br>在real2上执行：docker stop nginx,然后执行：curl 10.0.1.200<br>请求N次，返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
 <p>3.恢复一切正常后，再模拟keepalived master异常退出的情况<br>将test1的keepalived进程杀掉：killall keepalived<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real2的主机名，为符合预期结果：同一时间，只能一台服务器提供服务</p>
 <p>4.恢复一切正常后，再模拟keepalived master服务器宕机的情况<br>将test1的keepalived进程杀掉：killall keepalived<br>将real2的nginx关闭：docker stop nginx<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
-<p>4.恢复一切正常后，再模拟keepalived backup服务器宕机的情况<br>将test2的keepalived进程杀掉：killall keepalived<br>将real2的nginx关闭：docker stop nginx<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
+<p>5.恢复一切正常后，再模拟keepalived backup服务器宕机的情况<br>将test2的keepalived进程杀掉：killall keepalived<br>将real2的nginx关闭：docker stop nginx<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
@@ -466,7 +466,7 @@
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
     <p><span>发布时间:</span>2019-07-30, 14:57:42</p>
-    <p><span>最后更新:</span>2019-07-30, 16:17:43</p>
+    <p><span>最后更新:</span>2019-07-30, 16:40:16</p>
     <span>原始链接:</span><a class="post-url" href="/2019/07/30/tools/install-keepalived_/" title="install keepalived">https://gitrootid.github.io/2019/07/30/tools/install-keepalived_/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
