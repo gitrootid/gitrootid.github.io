@@ -69,6 +69,8 @@
           
           <category> golang </category>
           
+          <category> gin </category>
+          
       </categories>
       
       
@@ -79,6 +81,8 @@
             <tag> golang </tag>
             
             <tag> go-project </tag>
+            
+            <tag> gin </tag>
             
         </tags>
       
