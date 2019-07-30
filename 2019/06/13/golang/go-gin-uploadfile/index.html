@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <title>install confluence | 我的学习笔记</title>
-  <meta name="keywords" content=" confluence ">
-  <meta name="description" content="install confluence | 我的学习笔记">
+  <title>go porject 家庭财务收支记录 | 我的学习笔记</title>
+  <meta name="keywords" content=" go , golang , gin ">
+  <meta name="description" content="go porject 家庭财务收支记录 | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
 <meta name="keywords" content="keepalived">
@@ -317,33 +317,35 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-tools/install-confluence" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-golang/go-gin-uploadfile" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">install confluence</h1>
+        <h1 class="article-title">go porject 家庭财务收支记录</h1>
     
     <div class="article-meta">
-        
-        <span class="top"><a href="javascript:">置顶</a></span>
         
         
         
         <span class="book">
             
-            <a href="javascript:" data-rel="工具">工具</a>
+            <a href="javascript:" data-rel="gin">gin</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color1">confluence</a>
+            <a href="javascript:" class="color3">go</a>
+            
+            <a href="javascript:" class="color2">golang</a>
+            
+            <a href="javascript:" class="color4">gin</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-07-30 16:17:32">2017-03-23 15:13</time>
+        创建时间:<time class="date" title="更新时间: 2019-06-13 15:07:42">2019-06-13 10:38</time>
         
     </div>
     <div class="article-meta">
@@ -376,7 +378,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动confluence"><span class="toc-text">启动confluence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解"><span class="toc-text">破解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#uploadfile"><span class="toc-text">uploadfile</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -391,24 +393,12 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><a href="#准备工作">准备工作</a></li>
-<li><a href="#启动confluence">启动confluence</a></li>
-<li><a href="#破解">破解</a></li>
-</ul>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure>
-<h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p>
-<p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/assets/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p>
-<p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p>
-<p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p>
-<p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p>
-<h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p>
-<p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p>
-<p>4.把重新生成的文件重命名，并替换回原路径</p>
-<p>5.单击复制key到剪贴板</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure>
-<p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a><br>7.本文只是记录安装体验过程，商业用途请支持正版</p>
+        <p>[TOC]</p>
+<h2 id="uploadfile"><a href="#uploadfile" class="headerlink" title="uploadfile"></a>uploadfile</h2><p>Gin 对接受用户上传的文件做了友好的处理，在 Handler 中可以很简单的实现文件的接收。</p>
+<p>要注意的是，上传文件的大小有限制，通常是 &lt;32MB，你可以使用 router.MaxMultipartMemory更改它。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Deferred Cleanup, Checking Errors, and Potential Problems</span></span><br><span class="line"><span class="comment">//refer to:https://blevesearch.com/news/Deferred-Cleanup,-Checking-Errors,-and-Potential-Problems/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Close</span><span class="params">(c io.Closer)</span></span> &#123;</span><br><span class="line">	err := c.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	router := gin.Default()</span><br><span class="line">	<span class="comment">// 设置文件上传大小 router.MaxMultipartMemory = 8 &lt;&lt; 20  // 8 MiB</span></span><br><span class="line">	<span class="comment">// 处理单一的文件上传</span></span><br><span class="line">	router.POST(<span class="string">"/upload"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="comment">// 拿到这个文件</span></span><br><span class="line">		file, header, _ := c.Request.FormFile(<span class="string">"file"</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment">//getType := reflect.TypeOf(header)</span></span><br><span class="line">		<span class="comment">//fmt.Println("get Type is :", getType.Name())</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//getValue := reflect.ValueOf(header)</span></span><br><span class="line">		<span class="comment">//fmt.Println("get all Fields is:", getValue)</span></span><br><span class="line"></span><br><span class="line">		log.Println(<span class="string">"size:"</span>, header.Size)</span><br><span class="line"></span><br><span class="line">		fh, err := os.Create(header.Filename)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatal(err)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> Close(fh)</span><br><span class="line">		_, err1 := io.Copy(fh, file)</span><br><span class="line">		<span class="keyword">if</span> err1 != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatal(err1)</span><br><span class="line">		&#125;</span><br><span class="line">		c.String(http.StatusOK, fmt.Sprintf(<span class="string">"'%s' uploaded!"</span>, header.Filename))</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 处理多个文件的上传</span></span><br><span class="line">	router.POST(<span class="string">"/uploads"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		form, _ := c.MultipartForm()</span><br><span class="line">		<span class="comment">// 拿到集合</span></span><br><span class="line">		files := form.File[<span class="string">"upload[]"</span>]</span><br><span class="line">		<span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;</span><br><span class="line">			log.Println(file.Filename)</span><br><span class="line">		&#125;</span><br><span class="line">		c.String(http.StatusOK, fmt.Sprintf(<span class="string">"%d files uploaded!"</span>, <span class="built_in">len</span>(files)))</span><br><span class="line">	&#125;)</span><br><span class="line">	router.Run(<span class="string">":8080"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 curl 工具测试一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单一文件上传</span></span><br><span class="line">$ curl -X POST http://localhost:8080/upload \</span><br><span class="line">  -F <span class="string">"file=@/Users/appleboy/test.zip"</span> \</span><br><span class="line">  -H <span class="string">"Content-Type: multipart/form-data"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多文件上传</span></span><br><span class="line">$ curl -X POST http://localhost:8080/uploads \</span><br><span class="line">  -F <span class="string">"upload[]=@/Users/appleboy/test1.zip"</span> \</span><br><span class="line">  -F <span class="string">"upload[]=@/Users/appleboy/test2.zip"</span> \</span><br><span class="line">  -H <span class="string">"Content-Type: multipart/form-data"</span></span><br></pre></td></tr></table></figure>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
@@ -422,12 +412,12 @@
 
 
 <div class="article_copyright">
-    <p><span>文章标题:</span>install confluence</p>
+    <p><span>文章标题:</span>go porject 家庭财务收支记录</p>
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
-    <p><span>发布时间:</span>2017-03-23, 15:13:47</p>
-    <p><span>最后更新:</span>2019-07-30, 16:17:32</p>
-    <span>原始链接:</span><a class="post-url" href="/2017/03/23/tools/install-confluence/" title="install confluence">https://gitrootid.github.io/2017/03/23/tools/install-confluence/</a>
+    <p><span>发布时间:</span>2019-06-13, 10:38:00</p>
+    <p><span>最后更新:</span>2019-06-13, 15:07:42</p>
+    <span>原始链接:</span><a class="post-url" href="/2019/06/13/golang/go-gin-uploadfile/" title="go porject 家庭财务收支记录">https://gitrootid.github.io/2019/06/13/golang/go-gin-uploadfile/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

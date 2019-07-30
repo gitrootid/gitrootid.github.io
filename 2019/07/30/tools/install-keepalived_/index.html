@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <title>install confluence | 我的学习笔记</title>
-  <meta name="keywords" content=" confluence ">
-  <meta name="description" content="install confluence | 我的学习笔记">
+  <title>install keepalived | 我的学习笔记</title>
+  <meta name="keywords" content=" keepalived ">
+  <meta name="description" content="install keepalived | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
 <meta name="keywords" content="keepalived">
@@ -317,9 +317,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-tools/install-confluence" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-tools/install-keepalived_" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">install confluence</h1>
+        <h1 class="article-title">install keepalived</h1>
     
     <div class="article-meta">
         
@@ -336,14 +336,14 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color1">confluence</a>
+            <a href="javascript:" class="color1">keepalived</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-07-30 16:17:32">2017-03-23 15:13</time>
+        创建时间:<time class="date" title="更新时间: 2019-07-30 16:17:43">2019-07-30 14:57</time>
         
     </div>
     <div class="article-meta">
@@ -376,7 +376,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动confluence"><span class="toc-text">启动confluence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解"><span class="toc-text">破解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码安装keepalived"><span class="toc-text">源码安装keepalived</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置负载均衡"><span class="toc-text">配置负载均衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置realserver"><span class="toc-text">配置realserver</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动keepalived"><span class="toc-text">启动keepalived</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#验证"><span class="toc-text">验证</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -392,23 +392,63 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li><a href="#准备工作">准备工作</a></li>
-<li><a href="#启动confluence">启动confluence</a></li>
-<li><a href="#破解">破解</a></li>
+<li><a href="#需求">需求</a></li>
+<li><a href="#源码安装keepalived">源码安装keepalived</a></li>
+<li><a href="#配置负载均衡">配置负载均衡</a></li>
+<li><a href="#配置realserver">配置realserver</a></li>
+<li><a href="#启动keepalived">启动keepalived</a></li>
+<li><a href="#验证">验证</a></li>
 </ul>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure>
-<h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p>
-<p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/assets/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p>
-<p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p>
-<p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p>
-<p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p>
-<h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p>
-<p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p>
-<p>4.把重新生成的文件重命名，并替换回原路径</p>
-<p>5.单击复制key到剪贴板</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure>
-<p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a><br>7.本文只是记录安装体验过程，商业用途请支持正版</p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>1.有4台服务器，如下</p>
+<table>
+<thead>
+<tr>
+<th>hostname</th>
+<th>ip</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test1</td>
+<td>10.0.1.201</td>
+<td>keepalived master</td>
+</tr>
+<tr>
+<td>test2</td>
+<td>10.0.1.202</td>
+<td>keepalived backup</td>
+</tr>
+<tr>
+<td>real1</td>
+<td>10.0.1.203</td>
+<td>realserver 1,安装nginx</td>
+</tr>
+<tr>
+<td>real2</td>
+<td>10.0.1.204</td>
+<td>realserver 2,安装nginx</td>
+</tr>
+</tbody>
+</table>
+<p>2.本次试验的虚拟IP：10.0.1.200</p>
+<p>3.4台服务器同处于一个局域网中<br>4.要求：同一时间只能有一台服务器的nginx处理请求流量，假如现在是real2在处理请求，real1处于standby状态，将real2的nginx关闭，real1自动接管real2的流量</p>
+<h1 id="源码安装keepalived"><a href="#源码安装keepalived" class="headerlink" title="源码安装keepalived"></a>源码安装keepalived</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.keepalived.org/software/keepalived-2.0.17.tar.gz</span><br><span class="line">tar xf keepalived-2.0.17.tar.gz</span><br><span class="line">cd keepalived-2.0.17/</span><br><span class="line">mkdir /opt/keepalived</span><br><span class="line">./configure --prefix=/opt/keepalived</span><br><span class="line">make -j2</span><br><span class="line">make install</span><br><span class="line"># 安装完成</span><br></pre></td></tr></table></figure>
+<h1 id="配置负载均衡"><a href="#配置负载均衡" class="headerlink" title="配置负载均衡"></a>配置负载均衡</h1><p>1.修改配置文件<br>/opt/keepalived/etc/keepalived/keepalived.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line"></span><br><span class="line">global_defs &#123;</span><br><span class="line"></span><br><span class="line">   router_id LVS_TEST_1</span><br><span class="line">   vrrp_skip_check_adv_addr</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER</span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">    priority 150</span><br><span class="line">    advert_int 1</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        10.0.1.200</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">virtual_server 10.0.1.200 80 &#123;</span><br><span class="line">    delay_loop 6 #设置健康检查时间，单位是秒</span><br><span class="line">    lb_algo fo  # 设置负载调度算法，为了满足其中一台服务器只是作热备，这里使用fo算法，非常关键</span><br><span class="line">    lb_kind DR   #设置LVS实现LB机制，有NAT、TUNN和DR三个模式可选</span><br><span class="line">    #persistence_timeout 50 #保持客户端的请求在这个时间段内全部发到同一个真实服务器，单位为秒</span><br><span class="line">    protocol TCP</span><br><span class="line"></span><br><span class="line">    real_server 10.0.1.203 80 &#123;</span><br><span class="line">       weight 1</span><br><span class="line">       TCP_CHECK &#123;  </span><br><span class="line">            connect_timeout 2     #表示2秒无响应，则超时  </span><br><span class="line">            retry 2        #表示重试次数  </span><br><span class="line">            delay_before_retry 1  #表示重试间隔  </span><br><span class="line">            connect_port 80</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    real_server 10.0.1.204 80 &#123;</span><br><span class="line">       weight 2    # 如果没看错的话，fo算法是从权重最高的之中选一台作为负载服务器</span><br><span class="line">       TCP_CHECK &#123;  </span><br><span class="line">            connect_timeout 2     #表示2秒无响应，则超时  </span><br><span class="line">            retry 2        #表示重试次数  </span><br><span class="line">            delay_before_retry 1  #表示重试间隔  </span><br><span class="line">            connect_port 80</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.将keepalived的目录/opt/keepalived整个复制到test2,并只修改其中的三项：<br>state，router_id，priority<br>state为backup的服务器，其priority必须要小于master服务器的priority值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line"></span><br><span class="line">global_defs &#123;</span><br><span class="line"></span><br><span class="line">   router_id LVS_TEST_2</span><br><span class="line">   vrrp_skip_check_adv_addr</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state BACKUP</span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">    priority 100</span><br><span class="line">    advert_int 1</span><br><span class="line"></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        10.0.1.200</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">virtual_server 10.0.1.200 80 &#123;</span><br><span class="line">    delay_loop 6 #设置健康检查时间，单位是秒</span><br><span class="line">    lb_algo fo  # 设置负载调度算法，为了满足其中一台服务器只是作热备，这里使用fo算法，非常关键</span><br><span class="line">    lb_kind DR   #设置LVS实现LB机制，有NAT、TUNN和DR三个模式可选</span><br><span class="line">    #persistence_timeout 50 #保持客户端的请求在这个时间段内全部发到同一个真实服务器，单位为秒</span><br><span class="line">    protocol TCP</span><br><span class="line"></span><br><span class="line">    real_server 10.0.1.203 80 &#123;</span><br><span class="line">       weight 1</span><br><span class="line">       TCP_CHECK &#123;  </span><br><span class="line">            connect_timeout 2     #表示2秒无响应，则超时  </span><br><span class="line">            retry 2        #表示重试次数  </span><br><span class="line">            delay_before_retry 1  #表示重试间隔  </span><br><span class="line">            connect_port 80</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    real_server 10.0.1.204 80 &#123;</span><br><span class="line">       weight 2</span><br><span class="line">       TCP_CHECK &#123;  </span><br><span class="line">            connect_timeout 2     #表示2秒无响应，则超时  </span><br><span class="line">            retry 2        #表示重试次数  </span><br><span class="line">            delay_before_retry 1  #表示重试间隔  </span><br><span class="line">            connect_port 80</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.打开内核转发<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i &apos;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/&apos; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></p>
+<h1 id="配置realserver"><a href="#配置realserver" class="headerlink" title="配置realserver"></a>配置realserver</h1><p>1.由于是DR转发，所以realserver需要arp抑制<br>分别在real1和real2上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore  </span><br><span class="line">echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce  </span><br><span class="line">echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore  </span><br><span class="line">echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce</span><br></pre></td></tr></table></figure></p>
+<p>2.配置vip到realserver的lo:0接口</p>
+<p>分别在real1和real2上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VIP=‘10.0.1.200’</span><br><span class="line">ifconfig lo:0 $VIP netmask 255.255.255.255 broadcast $VIP</span><br><span class="line">route add -host $VIP dev lo:0</span><br></pre></td></tr></table></figure></p>
+<p>3.为了快捷，使用docker启动nginx<br>分别在real1和real2上执行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name nginx -p 80:80 -v /opt/html:/usr/share/nginx/html nginx</span><br><span class="line">hostname &gt; /opt/html/index.html</span><br><span class="line"># 为了测试效果，把主机名作为请求返回的结果，以确定是哪个服务器响应的请求</span><br></pre></td></tr></table></figure></p>
+<p>docker运行后，验证一下网嶡请求是否能正常返回：<br>curl 10.0.1.203<br>curl 10.0.1.204</p>
+<h1 id="启动keepalived"><a href="#启动keepalived" class="headerlink" title="启动keepalived"></a>启动keepalived</h1><p>分别在test1和test2上执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">/opt/keepalived/sbin/keepalived -f /opt/keepalived/etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure></p>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>1.模拟一切OK的情况<br>curl 10.0.1.200<br>请求N次，返回的结果都为real2的主机名，为符合预期结果：同一时间，只能一台服务器提供服务<br>2.模拟real2的nginx异常退出的情况<br>在real2上执行：docker stop nginx,然后执行：curl 10.0.1.200<br>请求N次，返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
+<p>3.恢复一切正常后，再模拟keepalived master异常退出的情况<br>将test1的keepalived进程杀掉：killall keepalived<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real2的主机名，为符合预期结果：同一时间，只能一台服务器提供服务</p>
+<p>4.恢复一切正常后，再模拟keepalived master服务器宕机的情况<br>将test1的keepalived进程杀掉：killall keepalived<br>将real2的nginx关闭：docker stop nginx<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
+<p>4.恢复一切正常后，再模拟keepalived backup服务器宕机的情况<br>将test2的keepalived进程杀掉：killall keepalived<br>将real2的nginx关闭：docker stop nginx<br>然后执行N次:curl 10.0.1.200<br>返回的结果都为real1的主机名，为符合预期结果：将real2的nginx关闭，real1自动接管real2的流量</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
@@ -422,12 +462,12 @@
 
 
 <div class="article_copyright">
-    <p><span>文章标题:</span>install confluence</p>
+    <p><span>文章标题:</span>install keepalived</p>
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
-    <p><span>发布时间:</span>2017-03-23, 15:13:47</p>
-    <p><span>最后更新:</span>2019-07-30, 16:17:32</p>
-    <span>原始链接:</span><a class="post-url" href="/2017/03/23/tools/install-confluence/" title="install confluence">https://gitrootid.github.io/2017/03/23/tools/install-confluence/</a>
+    <p><span>发布时间:</span>2019-07-30, 14:57:42</p>
+    <p><span>最后更新:</span>2019-07-30, 16:17:43</p>
+    <span>原始链接:</span><a class="post-url" href="/2019/07/30/tools/install-keepalived_/" title="install keepalived">https://gitrootid.github.io/2019/07/30/tools/install-keepalived_/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

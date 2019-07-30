@@ -6,18 +6,18 @@
   <meta name="keywords" content=" hexo , 3-hexo ">
   <meta name="description" content="3-hexo使用说明 | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="struct普通变量初始化 struct指针变量初始化 结构体成员的使用:指针变量 结构体比较和赋值 结构体做函数参数：值传递 结构体做函数参数：地址传递  struct普通变量初始化12345678910111213141516171819// 定义一个结构体类型type student struct &amp;#123;	id   int	name string	sex  byte	age  int">
-<meta name="keywords" content="go,golang">
+<meta name="description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
+<meta name="keywords" content="keepalived">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go 3.37 struct">
-<meta property="og:url" content="https://gitrootid.github.io/2019/05/31/golang/go-3-37-struct_/index.html">
+<meta property="og:title" content="install keepalived">
+<meta property="og:url" content="https://gitrootid.github.io/2019/07/30/tools/install-keepalived_/index.html">
 <meta property="og:site_name" content="我的学习笔记">
-<meta property="og:description" content="struct普通变量初始化 struct指针变量初始化 结构体成员的使用:指针变量 结构体比较和赋值 结构体做函数参数：值传递 结构体做函数参数：地址传递  struct普通变量初始化12345678910111213141516171819// 定义一个结构体类型type student struct &amp;#123;	id   int	name string	sex  byte	age  int">
+<meta property="og:description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-31T10:57:44.683Z">
+<meta property="og:updated_time" content="2019-07-30T08:17:43.708Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="go 3.37 struct">
-<meta name="twitter:description" content="struct普通变量初始化 struct指针变量初始化 结构体成员的使用:指针变量 结构体比较和赋值 结构体做函数参数：值传递 结构体做函数参数：地址传递  struct普通变量初始化12345678910111213141516171819// 定义一个结构体类型type student struct &amp;#123;	id   int	name string	sex  byte	age  int">
+<meta name="twitter:title" content="install keepalived">
+<meta name="twitter:description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -125,6 +125,8 @@
     
     <li data-rel="golang"> golang </li>
     
+    <li data-rel="gin"> gin </li>
+    
     <li data-rel="工具"> 工具 </li>
     
 </ul>
@@ -137,7 +139,7 @@
     </div>
     <div><a style="border-right: 1px solid #fff; width: 49%" class="about site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="14">
+<input type="hidden" id="yelog_site_posts_number" value="18">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -184,6 +186,10 @@
     </li>
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">gin</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">hexo</a>
     </li>
     
@@ -195,6 +201,10 @@
         <a href="javascript:" class="color1">confluence</a>
     </li>
     
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">keepalived</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
@@ -204,6 +214,11 @@
     </div>
     
     <nav id="title-list-nav">
+        
+        <a class="golang " href="/2019/06/06/golang/gin-blog/" data-tag="go,golang,go-project" data-author>
+            <span class="post-title" title="gin blog">gin blog</span>
+            <span class="post-date" title="2019-06-06 11:50:00">2019/06/06</span>
+        </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-03-环境搭建_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.03 环境搭建">go 1.03 环境搭建</span>
@@ -250,14 +265,24 @@
             <span class="post-date" title="2019-05-22 10:43:26">2019/05/22</span>
         </a>
         
+        <a class="golang " href="/2019/05/25/golang/go-3-31-map_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.31 map">go 3.31 map</span>
+            <span class="post-date" title="2019-05-25 23:00:26">2019/05/25</span>
+        </a>
+        
         <a class="golang " href="/2019/05/31/golang/go-3-37-struct_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 3.37 struct">go 3.37 struct</span>
             <span class="post-date" title="2019-05-31 16:09:19">2019/05/31</span>
         </a>
         
-        <a class="golang " href="/2019/05/25/golang/go-3-31-map_/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 3.31 map">go 3.31 map</span>
-            <span class="post-date" title="2019-05-25 23:00:26">2019/05/25</span>
+        <a class="golang " href="/2019/05/31/golang/go-4-02-面向对象_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.37 struct">go 3.37 struct</span>
+            <span class="post-date" title="2019-05-31 19:04:26">2019/05/31</span>
+        </a>
+        
+        <a class="gin " href="/2019/06/13/golang/go-gin-uploadfile/" data-tag="go,golang,gin" data-author>
+            <span class="post-title" title="go porject 家庭财务收支记录">go porject 家庭财务收支记录</span>
+            <span class="post-date" title="2019-06-13 10:38:00">2019/06/13</span>
         </a>
         
         <a class="golang " href="/2019/05/26/golang/go-project-家庭财务收支记录_/" data-tag="go,golang,go-project" data-author>
@@ -273,6 +298,11 @@
         <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
             <span class="post-title" title="install confluence">install confluence</span>
             <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2019/07/30/tools/install-keepalived_/" data-tag="keepalived" data-author>
+            <span class="post-title" title="install keepalived">install keepalived</span>
+            <span class="post-date" title="2019-07-30 14:57:42">2019/07/30</span>
         </a>
         
     </nav>
@@ -315,7 +345,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-05-16 17:23:43">2017-03-23 15:13</time>
+        创建时间:<time class="date" title="更新时间: 2019-07-30 16:17:29">2017-03-23 15:13</time>
         
     </div>
     <div class="article-meta">
@@ -456,7 +486,7 @@
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
     <p><span>发布时间:</span>2017-03-23, 15:13:47</p>
-    <p><span>最后更新:</span>2019-05-16, 17:23:43</p>
+    <p><span>最后更新:</span>2019-07-30, 16:17:29</p>
     <span>原始链接:</span><a class="post-url" href="/2017/03/23/3-hexo-instruction/" title="3-hexo使用说明">https://gitrootid.github.io/2017/03/23/3-hexo-instruction/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -534,7 +564,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#go','#golang','#go-project','#hexo','#3-hexo','#confluence',],
+            'data': ['#go','#golang','#go-project','#gin','#hexo','#3-hexo','#confluence','#keepalived',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
