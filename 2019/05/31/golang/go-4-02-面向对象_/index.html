@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <title>go 3.37 struct | 我的学习笔记</title>
+  <title>go 3.37 面向对象 | 我的学习笔记</title>
   <meta name="keywords" content=" go , golang ">
-  <meta name="description" content="go 3.37 struct | 我的学习笔记">
+  <meta name="description" content="go 3.37 面向对象 | 我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="需求 源码安装keepalived 配置负载均衡 配置realserver 启动keepalived 验证  需求1.有4台服务器，如下    hostname ip 作用     test1 10.0.1.201 keepalived master   test2 10.0.1.202 keepalived backup   real1 10.0.1.203 realserver 1,安装ng">
 <meta name="keywords" content="keepalived">
@@ -225,14 +225,14 @@
             <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
         </a>
         
-        <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
-            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
-        </a>
-        
         <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
             <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
+            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
         </a>
         
         <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
@@ -255,6 +255,11 @@
             <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
         </a>
         
+        <a class="golang " href="/2019/05/21/golang/go-3-02-指针_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.02 指针">go 3.02 指针</span>
+            <span class="post-date" title="2019-05-21 16:23:26">2019/05/21</span>
+        </a>
+        
         <a class="golang " href="/2019/05/22/golang/go-3-08-数组_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 3.08 数组">go 3.08 数组</span>
             <span class="post-date" title="2019-05-22 10:43:26">2019/05/22</span>
@@ -265,18 +270,13 @@
             <span class="post-date" title="2019-05-25 23:00:26">2019/05/25</span>
         </a>
         
-        <a class="golang " href="/2019/05/21/golang/go-3-02-指针_/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 3.02 指针">go 3.02 指针</span>
-            <span class="post-date" title="2019-05-21 16:23:26">2019/05/21</span>
-        </a>
-        
         <a class="golang " href="/2019/05/31/golang/go-3-37-struct_/" data-tag="go,golang" data-author>
             <span class="post-title" title="go 3.37 struct">go 3.37 struct</span>
             <span class="post-date" title="2019-05-31 16:09:19">2019/05/31</span>
         </a>
         
         <a class="golang " href="/2019/05/31/golang/go-4-02-面向对象_/" data-tag="go,golang" data-author>
-            <span class="post-title" title="go 3.37 struct">go 3.37 struct</span>
+            <span class="post-title" title="go 3.37 面向对象">go 3.37 面向对象</span>
             <span class="post-date" title="2019-05-31 19:04:26">2019/05/31</span>
         </a>
         
@@ -319,7 +319,7 @@
     <div class="pjax">
         <article id="post-golang/go-4-02-面向对象_" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">go 3.37 struct</h1>
+        <h1 class="article-title">go 3.37 面向对象</h1>
     
     <div class="article-meta">
         
@@ -343,7 +343,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-06-13 10:34:20">2019-05-31 19:04</time>
+        创建时间:<time class="date" title="更新时间: 2019-07-30 16:37:17">2019-05-31 19:04</time>
         
     </div>
     <div class="article-meta">
@@ -420,12 +420,12 @@
 
 
 <div class="article_copyright">
-    <p><span>文章标题:</span>go 3.37 struct</p>
+    <p><span>文章标题:</span>go 3.37 面向对象</p>
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
     <p><span>发布时间:</span>2019-05-31, 19:04:26</p>
-    <p><span>最后更新:</span>2019-06-13, 10:34:20</p>
-    <span>原始链接:</span><a class="post-url" href="/2019/05/31/golang/go-4-02-面向对象_/" title="go 3.37 struct">https://gitrootid.github.io/2019/05/31/golang/go-4-02-面向对象_/</a>
+    <p><span>最后更新:</span>2019-07-30, 16:37:17</p>
+    <span>原始链接:</span><a class="post-url" href="/2019/05/31/golang/go-4-02-面向对象_/" title="go 3.37 面向对象">https://gitrootid.github.io/2019/05/31/golang/go-4-02-面向对象_/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
