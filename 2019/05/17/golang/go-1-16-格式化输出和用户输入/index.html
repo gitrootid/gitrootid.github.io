@@ -123,11 +123,11 @@
 <ul>
     <li class="all active">全部文章</li>
     
+    <li data-rel="工具"> 工具 </li>
+    
     <li data-rel="golang"> golang </li>
     
     <li data-rel="gin"> gin </li>
-    
-    <li data-rel="工具"> 工具 </li>
     
 </ul>
 <div class="left-bottom">
@@ -174,22 +174,6 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color3">go</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">golang</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">go-project</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color4">gin</a>
-    </li>
-    
-    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">hexo</a>
     </li>
     
@@ -205,6 +189,22 @@
         <a href="javascript:" class="color1">keepalived</a>
     </li>
     
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">go</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color2">golang</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">go-project</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">gin</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
@@ -215,7 +215,22 @@
     
     <nav id="title-list-nav">
         
-        <a class="golang " href="/2019/06/06/golang/gin-blog/" data-tag="go,golang,go-project" data-author>
+        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
+            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
+            <span class="post-title" title="install confluence">install confluence</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2019/07/30/tools/install-keepalived_/" data-tag="keepalived" data-author>
+            <span class="post-title" title="install keepalived">install keepalived</span>
+            <span class="post-date" title="2019-07-30 14:57:42">2019/07/30</span>
+        </a>
+        
+        <a class="golang " href="/2019/06/06/golang/gin-blog_/" data-tag="go,golang,go-project" data-author>
             <span class="post-title" title="gin blog">gin blog</span>
             <span class="post-date" title="2019-06-06 11:50:00">2019/06/06</span>
         </a>
@@ -280,7 +295,7 @@
             <span class="post-date" title="2019-05-31 19:04:26">2019/05/31</span>
         </a>
         
-        <a class="gin " href="/2019/06/13/golang/go-gin-uploadfile/" data-tag="go,golang,gin" data-author>
+        <a class="gin " href="/2019/06/13/golang/go-gin-uploadfile_/" data-tag="go,golang,gin" data-author>
             <span class="post-title" title="go porject 家庭财务收支记录">go porject 家庭财务收支记录</span>
             <span class="post-date" title="2019-06-13 10:38:00">2019/06/13</span>
         </a>
@@ -288,21 +303,6 @@
         <a class="golang " href="/2019/05/26/golang/go-project-家庭财务收支记录_/" data-tag="go,golang,go-project" data-author>
             <span class="post-title" title="go porject 家庭财务收支记录">go porject 家庭财务收支记录</span>
             <span class="post-date" title="2019-05-26 15:44:00">2019/05/26</span>
-        </a>
-        
-        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
-            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
-            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
-        </a>
-        
-        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
-            <span class="post-title" title="install confluence">install confluence</span>
-            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
-        </a>
-        
-        <a id="top" class="工具 " href="/2019/07/30/tools/install-keepalived_/" data-tag="keepalived" data-author>
-            <span class="post-title" title="install keepalived">install keepalived</span>
-            <span class="post-date" title="2019-07-30 14:57:42">2019/07/30</span>
         </a>
         
     </nav>
@@ -492,7 +492,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#go','#golang','#go-project','#gin','#hexo','#3-hexo','#confluence','#keepalived',],
+            'data': ['#hexo','#3-hexo','#confluence','#keepalived','#go','#golang','#go-project','#gin',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
