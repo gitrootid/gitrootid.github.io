@@ -67,8 +67,6 @@
       
       <categories>
           
-          <category> golang </category>
-          
           <category> gin </category>
           
       </categories>
