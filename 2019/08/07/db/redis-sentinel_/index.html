@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>redis sentinel集群搭建及监控 | 我的学习笔记</title>
+  <meta name="keywords" content=" redis ">
+  <meta name="description" content="redis sentinel集群搭建及监控 | 我的学习笔记">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="搭建环境介绍 redis各角色的启动脚本 sentinel配置文件 redis集群状态变化的通知脚本 搭建监控prometheus+grafana+redis_exporter  搭建环境介绍在一台服务器上使用redis docker镜像安装集群测试环境一主二从三哨兵:    ip port name role     10.0.1.200 6479 master master   10.0.1">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis sentinel集群搭建及监控">
+<meta property="og:url" content="https://gitrootid.github.io/2019/08/07/db/redis-sentinel_/index.html">
+<meta property="og:site_name" content="我的学习笔记">
+<meta property="og:description" content="搭建环境介绍 redis各角色的启动脚本 sentinel配置文件 redis集群状态变化的通知脚本 搭建监控prometheus+grafana+redis_exporter  搭建环境介绍在一台服务器上使用redis docker镜像安装集群测试环境一主二从三哨兵:    ip port name role     10.0.1.200 6479 master master   10.0.1">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-07T07:21:07.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis sentinel集群搭建及监控">
+<meta name="twitter:description" content="搭建环境介绍 redis各角色的启动脚本 sentinel配置文件 redis集群状态变化的通知脚本 搭建监控prometheus+grafana+redis_exporter  搭建环境介绍在一台服务器上使用redis docker镜像安装集群测试环境一主二从三哨兵:    ip port name role     10.0.1.200 6479 master master   10.0.1">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<script src="/js/iconfont.js"></script>
+
+</head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value>
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg">
+</a>
+<div class="author">
+    <span>Shawn</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="rss" href="/atom.xml" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-rss"/>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="github" href="https://github.com/gitrootid" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"/>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+        <a title="email" href="mailto:rootid@126.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"/>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+<ul>
+    <li class="all active">全部文章</li>
+    
+    <li data-rel="gin"> gin </li>
+    
+    <li data-rel="golang"> golang </li>
+    
+    <li data-rel="工具"> 工具 </li>
+    
+    <li data-rel="db"> db </li>
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a style="border-right: 1px solid #fff; width: 49%" class="about site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="20">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode==13){return false;}">
+        <input class="search" type="text" placeholder="以 in: 开头进行全文搜索" autocomplete="off" id="local-search-input">
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none">
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color3">go</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color2">golang</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">go-project</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">gin</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color5">hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color2">3-hexo</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">confluence</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">keepalived</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a href="javascript:" class="color1">redis</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a class="gin " href="/2019/06/06/golang/gin-blog_/" data-tag="go,golang,go-project,gin" data-author>
+            <span class="post-title" title="gin blog">gin blog</span>
+            <span class="post-date" title="2019-06-06 11:50:00">2019/06/06</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-03-环境搭建_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.03 环境搭建">go 1.03 环境搭建</span>
+            <span class="post-date" title="2019-05-17 10:18:24">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-07-变量/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.07 变量">go 1.07 变量</span>
+            <span class="post-date" title="2019-05-17 11:44:29">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-16-格式化输出和用户输入/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.16 格式化输出和用户输入">go 1.16 格式化输出和用户输入</span>
+            <span class="post-date" title="2019-05-17 16:31:02">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-25-类型转换/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.25 类型转换">go 1.25 类型转换</span>
+            <span class="post-date" title="2019-05-17 16:51:05">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-1-31-流程控制_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 1.31 流程控制">go 1.31 流程控制</span>
+            <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-2-04-函数_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 2.04 函数">go 2.04 函数</span>
+            <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/17/golang/go-2-19-调用_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 2.19 调用">go 2.19 调用</span>
+            <span class="post-date" title="2019-05-17 17:48:26">2019/05/17</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/21/golang/go-3-02-指针_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.02 指针">go 3.02 指针</span>
+            <span class="post-date" title="2019-05-21 16:23:26">2019/05/21</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/22/golang/go-3-08-数组_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.08 数组">go 3.08 数组</span>
+            <span class="post-date" title="2019-05-22 10:43:26">2019/05/22</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/25/golang/go-3-31-map_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.31 map">go 3.31 map</span>
+            <span class="post-date" title="2019-05-25 23:00:26">2019/05/25</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/31/golang/go-3-37-struct_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.37 struct">go 3.37 struct</span>
+            <span class="post-date" title="2019-05-31 16:09:19">2019/05/31</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/31/golang/go-4-02-面向对象_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="go 3.37 面向对象">go 3.37 面向对象</span>
+            <span class="post-date" title="2019-05-31 19:04:26">2019/05/31</span>
+        </a>
+        
+        <a class="gin " href="/2019/06/13/golang/go-gin-uploadfile_/" data-tag="go,golang,gin" data-author>
+            <span class="post-title" title="go gin uploadfile">go gin uploadfile</span>
+            <span class="post-date" title="2019-06-13 10:38:00">2019/06/13</span>
+        </a>
+        
+        <a class="golang " href="/2019/08/07/golang/go-http-post_/" data-tag="go,golang" data-author>
+            <span class="post-title" title="使用go发送http POST请求">使用go发送http POST请求</span>
+            <span class="post-date" title="2019-08-07 11:32:49">2019/08/07</span>
+        </a>
+        
+        <a class="golang " href="/2019/05/26/golang/go-project-家庭财务收支记录_/" data-tag="go,golang,go-project" data-author>
+            <span class="post-title" title="go porject 家庭财务收支记录">go porject 家庭财务收支记录</span>
+            <span class="post-date" title="2019-05-26 15:44:00">2019/05/26</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2017/03/23/3-hexo-instruction/" data-tag="hexo,3-hexo" data-author>
+            <span class="post-title" title="3-hexo使用说明">3-hexo使用说明</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2017/03/23/tools/install-confluence/" data-tag="confluence" data-author>
+            <span class="post-title" title="install confluence">install confluence</span>
+            <span class="post-date" title="2017-03-23 15:13:47">2017/03/23</span>
+        </a>
+        
+        <a id="top" class="工具 " href="/2019/07/30/tools/install-keepalived_/" data-tag="keepalived" data-author>
+            <span class="post-title" title="install keepalived">install keepalived</span>
+            <span class="post-date" title="2019-07-30 14:57:42">2019/07/30</span>
+        </a>
+        
+        <a class="db " href="/2019/08/07/db/redis-sentinel_/" data-tag="redis" data-author>
+            <span class="post-title" title="redis sentinel集群搭建及监控">redis sentinel集群搭建及监控</span>
+            <span class="post-date" title="2019-08-07 11:49:04">2019/08/07</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-db/redis-sentinel_" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">redis sentinel集群搭建及监控</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+            <a href="javascript:" data-rel="db">db</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" class="color1">redis</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title="更新时间: 2019-08-07 15:21:07">2019-08-07 11:49</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境介绍"><span class="toc-text">搭建环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis各角色的启动脚本"><span class="toc-text">redis各角色的启动脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sentinel配置文件"><span class="toc-text">sentinel配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis集群状态变化的通知脚本"><span class="toc-text">redis集群状态变化的通知脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建监控prometheus-grafana-redis-exporter"><span class="toc-text">搭建监控prometheus+grafana+redis_exporter</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="#搭建环境介绍">搭建环境介绍</a></li>
+<li><a href="#redis各角色的启动脚本">redis各角色的启动脚本</a></li>
+<li><a href="#sentinel配置文件">sentinel配置文件</a></li>
+<li><a href="#redis集群状态变化的通知脚本">redis集群状态变化的通知脚本</a></li>
+<li><a href="#搭建监控prometheusgrafanaredis_exporter">搭建监控prometheus+grafana+redis_exporter</a></li>
+</ul>
+<h2 id="搭建环境介绍"><a href="#搭建环境介绍" class="headerlink" title="搭建环境介绍"></a>搭建环境介绍</h2><p>在一台服务器上使用redis docker镜像安装集群测试环境<br>一主二从三哨兵:</p>
+<table>
+<thead>
+<tr>
+<th>ip</th>
+<th>port</th>
+<th>name</th>
+<th>role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.1.200</td>
+<td>6479</td>
+<td>master</td>
+<td>master</td>
+</tr>
+<tr>
+<td>10.0.1.200</td>
+<td>6579</td>
+<td>slave01</td>
+<td>slave</td>
+</tr>
+<tr>
+<td>10.0.1.200</td>
+<td>6679</td>
+<td>slave02</td>
+<td>slave</td>
+</tr>
+<tr>
+<td>10.0.1.200</td>
+<td>26479</td>
+<td>sen01</td>
+<td>sentinel</td>
+</tr>
+<tr>
+<td>10.0.1.200</td>
+<td>26579</td>
+<td>sen02</td>
+<td>sentinel</td>
+</tr>
+<tr>
+<td>10.0.1.200</td>
+<td>26679</td>
+<td>sen03</td>
+<td>sentinel</td>
+</tr>
+</tbody>
+</table>
+<h2 id="redis各角色的启动脚本"><a href="#redis各角色的启动脚本" class="headerlink" title="redis各角色的启动脚本"></a>redis各角色的启动脚本</h2><p>为了避免通告的IP和端口问题，docker容器的网络直接使用host<br>1_run_redis_master.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=master</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; --net &apos;host&apos; --restart always -v /etc/localtime:/etc/localtime -v /data/redis_sentinel/master_data:/data redis:5.0.5 redis-server --port 6479</span><br></pre></td></tr></table></figure></p>
+<p>2_run_redis_slave01.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=slave01</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; --net &apos;host&apos; --restart always -v /etc/localtime:/etc/localtime -v /data/redis_sentinel/slave01_data:/data redis:5.0.5  redis-server --port 6579 --slaveof 10.0.1.200 6479</span><br></pre></td></tr></table></figure></p>
+<p>3_run_redis_slave02.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=slave02</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; --net &apos;host&apos; --restart always -v /etc/localtime:/etc/localtime -v /data/redis_sentinel/slave02_data:/data redis:5.0.5  redis-server --port 6679 --slaveof 10.0.1.200 6479</span><br></pre></td></tr></table></figure></p>
+<p>4_start_sen01.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;sen01&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; -p 26479:26479 -v /data/redis_sentinel/conf:/conf redis:5.0.5 redis-server /conf/sentinel26479.conf --sentinel</span><br></pre></td></tr></table></figure></p>
+<p>5_start_sen02.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;sen02&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; -p 26579:26579 -v /data/redis_sentinel/conf:/conf redis:5.0.5 redis-server /conf/sentinel26579.conf --sentinel</span><br></pre></td></tr></table></figure></p>
+<p>6_start_sen03.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;sen03&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; -p 26679:26679 -v /data/redis_sentinel/conf:/conf redis:5.0.5 redis-server /conf/sentinel26679.conf --sentinel</span><br></pre></td></tr></table></figure></p>
+<h2 id="sentinel配置文件"><a href="#sentinel配置文件" class="headerlink" title="sentinel配置文件"></a>sentinel配置文件</h2><p>从github获取redis sentinel配置文件<br>wget <a href="https://raw.githubusercontent.com/antirez/redis/unstable/sentinel.conf" target="_blank" rel="noopener">https://raw.githubusercontent.com/antirez/redis/unstable/sentinel.conf</a></p>
+<p>为方便以后快速查看配置选项的含义，保留配置项的英文注释，修改配置文件如下：<br>sentinel26479.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">port 26479</span><br><span class="line">daemonize no</span><br><span class="line">pidfile &quot;/var/run/redis-sentinel.pid&quot;</span><br><span class="line">logfile &quot;&quot;</span><br><span class="line"></span><br><span class="line"># dir &lt;working-directory&gt;</span><br><span class="line"># Every long running process should have a well-defined working directory.</span><br><span class="line"># For Redis Sentinel to chdir to /tmp at startup is the simplest thing</span><br><span class="line"># for the process to don&apos;t interfere with administrative tasks such as</span><br><span class="line"># unmounting filesystems.</span><br><span class="line">dir &quot;/tmp&quot;</span><br><span class="line"></span><br><span class="line"># sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;redis-port&gt; &lt;quorum&gt;</span><br><span class="line">#</span><br><span class="line"># Tells Sentinel to monitor this master, and to consider it in O_DOWN</span><br><span class="line"># (Objectively Down) state only if at least &lt;quorum&gt; sentinels agree.</span><br><span class="line">#</span><br><span class="line"># Note that whatever is the ODOWN quorum, a Sentinel will require to</span><br><span class="line"># be elected by the majority of the known Sentinels in order to</span><br><span class="line"># start a failover, so no failover can be performed in minority.</span><br><span class="line">#</span><br><span class="line"># Replicas are auto-discovered, so you don&apos;t need to specify replicas in</span><br><span class="line"># any way. Sentinel itself will rewrite this configuration file adding</span><br><span class="line"># the replicas using additional configuration options.</span><br><span class="line"># Also note that the configuration file is rewritten when a</span><br><span class="line"># replica is promoted to master.</span><br><span class="line">#</span><br><span class="line"># Note: master name should not include special characters or spaces.</span><br><span class="line"># The valid charset is A-z 0-9 and the three characters &quot;.-_&quot;.</span><br><span class="line"></span><br><span class="line">sentinel myid d729591205c3d1324c35aa8e94f7ece329c2eadf</span><br><span class="line"></span><br><span class="line"># Number of milliseconds the master (or any attached replica or sentinel) should</span><br><span class="line"># be unreachable (as in, not acceptable reply to PING, continuously, for the</span><br><span class="line"># specified period) in order to consider it in S_DOWN state (Subjectively</span><br><span class="line"># Down).</span><br><span class="line">#</span><br><span class="line"># Default is 30 seconds.</span><br><span class="line"></span><br><span class="line">sentinel deny-scripts-reconfig yes</span><br><span class="line"></span><br><span class="line"># sentinel parallel-syncs &lt;master-name&gt; &lt;numreplicas&gt;</span><br><span class="line">#</span><br><span class="line"># How many replicas we can reconfigure to point to the new replica simultaneously</span><br><span class="line"># during the failover. Use a low number if you use the replicas to serve query</span><br><span class="line"># to avoid that all the replicas will be unreachable at about the same</span><br><span class="line"># time while performing the synchronization with the master.</span><br><span class="line"></span><br><span class="line">sentinel monitor mymaster 10.0.1.200 6479 2</span><br><span class="line"></span><br><span class="line"># sentinel failover-timeout &lt;master-name&gt; &lt;milliseconds&gt;</span><br><span class="line">#</span><br><span class="line"># Specifies the failover timeout in milliseconds. It is used in many ways:</span><br><span class="line">#</span><br><span class="line"># - The time needed to re-start a failover after a previous failover was</span><br><span class="line">#   already tried against the same master by a given Sentinel, is two</span><br><span class="line">#   times the failover timeout.</span><br><span class="line">#</span><br><span class="line"># - The time needed for a replica replicating to a wrong master according</span><br><span class="line">#   to a Sentinel current configuration, to be forced to replicate</span><br><span class="line">#   with the right master, is exactly the failover timeout (counting since</span><br><span class="line">#   the moment a Sentinel detected the misconfiguration).</span><br><span class="line">#</span><br><span class="line"># - The time needed to cancel a failover that is already in progress but</span><br><span class="line">#   did not produced any configuration change (SLAVEOF NO ONE yet not</span><br><span class="line">#   acknowledged by the promoted replica).</span><br><span class="line">#</span><br><span class="line"># - The maximum time a failover in progress waits for all the replicas to be</span><br><span class="line">#   reconfigured as replicas of the new master. However even after this time</span><br><span class="line">#   the replicas will be reconfigured by the Sentinels anyway, but not with</span><br><span class="line">#   the exact parallel-syncs progression as specified.</span><br><span class="line">#</span><br><span class="line"># Default is 3 minutes.</span><br><span class="line"></span><br><span class="line">sentinel down-after-milliseconds mymaster 5000</span><br><span class="line"></span><br><span class="line"># NOTIFICATION SCRIPT</span><br><span class="line">#</span><br><span class="line"># sentinel notification-script &lt;master-name&gt; &lt;script-path&gt;</span><br><span class="line">#</span><br><span class="line"># Call the specified notification script for any sentinel event that is</span><br><span class="line"># generated in the WARNING level (for instance -sdown, -odown, and so forth).</span><br><span class="line"># This script should notify the system administrator via email, SMS, or any</span><br><span class="line"># other messaging system, that there is something wrong with the monitored</span><br><span class="line"># Redis systems.</span><br><span class="line">#</span><br><span class="line"># The script is called with just two arguments: the first is the event type</span><br><span class="line"># and the second the event description.</span><br><span class="line">#</span><br><span class="line"># The script must exist and be executable in order for sentinel to start if</span><br><span class="line"># this option is provided.</span><br><span class="line"></span><br><span class="line">sentinel notification-script mymaster /conf/notify.sh</span><br><span class="line">sentinel config-epoch mymaster 0</span><br><span class="line"># Generated by CONFIG REWRITE</span><br><span class="line">sentinel leader-epoch mymaster 0</span><br><span class="line">sentinel known-replica mymaster 10.0.1.200 6679</span><br><span class="line">sentinel known-replica mymaster 10.0.1.200 6579</span><br><span class="line">sentinel current-epoch 0</span><br></pre></td></tr></table></figure></p>
+<p>sentinel26579.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">port 26579</span><br><span class="line">daemonize no</span><br><span class="line">pidfile &quot;/var/run/redis-sentinel.pid&quot;</span><br><span class="line">logfile &quot;&quot;</span><br><span class="line">dir &quot;/tmp&quot;</span><br><span class="line">sentinel myid d729591205c3d1324c35aa8e94f7ece329c2eadf</span><br><span class="line">sentinel deny-scripts-reconfig yes</span><br><span class="line">sentinel monitor mymaster 10.0.1.200 6479 2</span><br><span class="line">sentinel down-after-milliseconds mymaster 5000</span><br><span class="line">sentinel notification-script mymaster /conf/notify.sh</span><br><span class="line">sentinel config-epoch mymaster 0</span><br><span class="line">sentinel leader-epoch mymaster 0</span><br><span class="line">sentinel known-replica mymaster 10.0.1.200 6679</span><br><span class="line">sentinel known-replica mymaster 10.0.1.200 6579</span><br><span class="line">sentinel current-epoch 0</span><br></pre></td></tr></table></figure></p>
+<p>sentinel26679.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">port 26679</span><br><span class="line">daemonize no</span><br><span class="line">pidfile &quot;/var/run/redis-sentinel.pid&quot;</span><br><span class="line">logfile &quot;&quot;</span><br><span class="line">dir &quot;/tmp&quot;</span><br><span class="line">sentinel myid d729591205c3d1324c35aa8e94f7ece329c2eadf</span><br><span class="line">sentinel deny-scripts-reconfig yes</span><br><span class="line">sentinel monitor mymaster 10.0.1.200 6479 2</span><br><span class="line">sentinel down-after-milliseconds mymaster 5000</span><br><span class="line">sentinel notification-script mymaster /conf/notify.sh</span><br><span class="line">sentinel config-epoch mymaster 0</span><br><span class="line">sentinel leader-epoch mymaster 0</span><br><span class="line">sentinel known-replica mymaster 10.0.1.200 6579</span><br><span class="line">sentinel known-replica mymaster 10.0.1.200 6679</span><br><span class="line">sentinel current-epoch 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="redis集群状态变化的通知脚本"><a href="#redis集群状态变化的通知脚本" class="headerlink" title="redis集群状态变化的通知脚本"></a>redis集群状态变化的通知脚本</h2><p>由于官方的redis镜像中没有curl命令，所以自己动手用golang写个简单的http POST字符串的脚本编译成gohttppost，<br>调用钉钉的webhook机器人，达到通知的目的，golang脚本参见：<br>使用go发送http POST请求：<a href="https://gitrootid.github.io/2019/08/07/golang/go-http-post_/">https://gitrootid.github.io/2019/08/07/golang/go-http-post_/</a></p>
+<p>notify.sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">dir=$(dirname &quot;$0&quot;)</span><br><span class="line">cd $&#123;dir&#125;</span><br><span class="line">dir=`pwd`</span><br><span class="line">cd $&#123;dir&#125;</span><br><span class="line"></span><br><span class="line">event_type=$1</span><br><span class="line">event_description=$2</span><br><span class="line"></span><br><span class="line">topic=&apos;redis-sentinel-notification&apos;</span><br><span class="line">content=&apos;topic:&apos;$&#123;topic&#125;&apos;,event:&apos;$&#123;event_type&#125;&apos;,description:&apos;$&#123;event_description&#125;</span><br><span class="line">ding_talk_url=&apos;https://oapi.dingtalk.com/robot/send?access_token=XXX&apos;</span><br><span class="line">MSG=&apos;&#123;&quot;msgtype&quot;: &quot;text&quot;,&quot;text&quot;: &#123;&quot;content&quot;: &quot;&apos;$&#123;content&#125;&apos;&quot;&#125;&#125;&apos;</span><br><span class="line">./gohttppost -u &quot;$&#123;ding_talk_url&#125;&quot; -b &quot;$&#123;MSG&#125;&quot; -s true</span><br></pre></td></tr></table></figure></p>
+<p>至此集群搭建完成</p>
+<h2 id="搭建监控prometheus-grafana-redis-exporter"><a href="#搭建监控prometheus-grafana-redis-exporter" class="headerlink" title="搭建监控prometheus+grafana+redis_exporter"></a>搭建监控prometheus+grafana+redis_exporter</h2><p>参考：<a href="https://github.com/oliver006/redis_exporter" target="_blank" rel="noopener">https://github.com/oliver006/redis_exporter</a><br>修改prometheus配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># my global config</span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     15s</span><br><span class="line">  evaluation_interval: 30s</span><br><span class="line">  # scrape_timeout is set to the global default (10s).</span><br><span class="line"></span><br><span class="line">scrape_configs:</span><br><span class="line"></span><br><span class="line">- job_name: redis_irs_cs</span><br><span class="line">  static_configs:</span><br><span class="line">    - targets:</span><br><span class="line">      - redis://10.0.1.200:6479</span><br><span class="line">      - redis://10.0.1.200:6579</span><br><span class="line">      - redis://10.0.1.200:6679</span><br><span class="line">  metrics_path: /scrape</span><br><span class="line">  relabel_configs:</span><br><span class="line">    - source_labels: [__address__]</span><br><span class="line">      target_label: __param_target</span><br><span class="line">    - source_labels: [__param_target]</span><br><span class="line">      target_label: addr</span><br><span class="line">    - target_label: __address__</span><br><span class="line">      replacement: 10.0.1.200:9121</span><br></pre></td></tr></table></figure></p>
+<p>使用docker镜像运行prometheus<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=prometheus</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run --name $&#123;name&#125; -d -p 9090:9090 -v /data/project/prometheus/conf/prometheus.yml:/etc/prometheus/prometheus.yml \</span><br><span class="line">-v /data/project/prometheus/data:/prometheus \</span><br><span class="line">-v /etc/localtime:/etc/localtime prom/prometheus</span><br></pre></td></tr></table></figure></p>
+<p>使用docker镜像运行redis_exporter<br>1.0版本支持直接把redis_exporter作为黑盒运行，不用关心配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=redis_exporter</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; --restart always -p 9121:9121 oliver006/redis_exporter</span><br></pre></td></tr></table></figure></p>
+<p>使用docker镜像运行grafana<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=grafana</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm $&#123;name&#125;</span><br><span class="line">docker run -d --name $&#123;name&#125; --restart always -v /data/project/grafana:/var/lib/grafana -p 3000:3000 grafana/grafana</span><br></pre></td></tr></table></figure></p>
+<p>默认用户名密码：<br>admin/admin</p>
+<p>登陆后导入从grafana官网下载的redis dashboard仪表盘：<a href="https://grafana.com/api/dashboards/2751/revisions/1/download" target="_blank" rel="noopener">https://grafana.com/api/dashboards/2751/revisions/1/download</a><br>然后在configuration里配置datasource,再进入prometheus-redis的dashboard,就可以看到漂亮的各指标界面了</p>
+<p>prometheus的报警规则以后再增加</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a href="javascript:void(0)" class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span>文章标题:</span>redis sentinel集群搭建及监控</p>
+    
+    <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
+    <p><span>发布时间:</span>2019-08-07, 11:49:04</p>
+    <p><span>最后更新:</span>2019-08-07, 15:21:07</p>
+    <span>原始链接:</span><a class="post-url" href="/2019/08/07/db/redis-sentinel_/" title="redis sentinel集群搭建及监控">https://gitrootid.github.io/2019/08/07/db/redis-sentinel_/</a>
+    <p>
+        <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script type="text/javascript">
+    $.getScript('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+            clientID: '20d8958f260ff5156351',
+            clientSecret: 'f6fee33b86bef86a031dac000a771dbdad9e78a8',
+            repo: 'gitrootid.github.io',
+            owner: 'gitrootid',
+            admin: ['gitrootid'],
+            id: location.pathname,
+            distractionFreeMode: 'true',
+            language: 'zh-CN',
+            perPage: parseInt('10',10)
+        })
+        gitalk.render('comments')
+    })
+</script>
+
+
+
+    
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2018-2019 gitrootid</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class id="rocket" href="javascript:void(0)"></a>
+    </div>
+</div>
+<div class="acParent"></div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="//cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+
+<script src="/js/script.js"></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#go','#golang','#go-project','#gin','#hexo','#3-hexo','#confluence','#keepalived','#redis',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1;
+            var $numbering = $('<ul/>').addClass('pre-numbering').attr("unselectable","on");
+            $(this).addClass('has-numbering')
+                    .parent()
+                    .append($numbering);
+            for(i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 2px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 2px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /*引用块样式*/
+    
+    .post .pjax article blockquote {
+        padding: 10px 20px;
+        background-color: white;
+        border: none;
+        border-left: 4px solid #42b983;
+        border-right: 4px solid #42b983;
+        border-radius: 10px;
+    }
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        background: url("https://gitrootid.github.io/assets/bg.jpeg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
