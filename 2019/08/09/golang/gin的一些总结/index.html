@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <title>install confluence | 我的学习笔记</title>
-  <meta name="keywords" content=" confluence ">
-  <meta name="description" content="install confluence | 我的学习笔记">
+  <title>我的学习笔记</title>
+  <meta name="keywords" content>
+  <meta name="description" content="我的学习笔记">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="使用docker镜像运行prometheus 使用docker镜像运行mysqld_exporter 使用docker镜像运行grafana 下载dashboard并导入grafana  使用docker镜像运行prometheus1.修改prometheus配置文件 1234567891011121314# my global configglobal:  scrape_interval:">
 <meta name="keywords" content="prometheus">
@@ -382,33 +382,17 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-tools/install-confluence" class="article article-type-post" itemscope itemprop="blogPost">
-    
-        <h1 class="article-title">install confluence</h1>
+        <article id="post-golang/gin的一些总结" class="article article-type-post" itemscope itemprop="blogPost">
     
     <div class="article-meta">
         
-        <span class="top"><a href="javascript:">置顶</a></span>
         
         
-        
-        <span class="book">
-            
-            <a href="javascript:" data-rel="工具">工具</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="javascript:" class="color1">confluence</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title="更新时间: 2019-07-30 17:24:30">2017-03-23 15:13</time>
+        创建时间:<time class="date" title="更新时间: 2019-08-09 18:05:37">2019-08-09 18:05</time>
         
     </div>
     <div class="article-meta">
@@ -441,7 +425,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动confluence"><span class="toc-text">启动confluence</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解"><span class="toc-text">破解</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#gin非0取值注意："><span class="toc-text">gin非0取值注意：</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -456,24 +440,9 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><a href="#准备工作">准备工作</a></li>
-<li><a href="#启动confluence">启动confluence</a></li>
-<li><a href="#破解">破解</a></li>
-</ul>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>1.创建目录<br>mkdir -p /data/atlassian/confluence/{conf_home,conf_install}<br>2.修改权限<br>chown -R daemon:daemon  /data/atlassian/confluence<br>3.创建启动脚本，并修改权限<br>cat /opt/run_confluence.sh<br>chmod +x /opt/run_confluence.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">name=&quot;confluence-container&quot;</span><br><span class="line">docker stop $&#123;name&#125; &amp;&amp; docker rm -v $&#123;name&#125;</span><br><span class="line">/usr/bin/docker run --restart=always -d --name &quot;confluence-container&quot; \</span><br><span class="line">    -p &quot;8090:8090&quot; \</span><br><span class="line">    -v &quot;/data/atlassian/confluence/conf_home:/var/atlassian/confluence&quot; \</span><br><span class="line">    cptactionhank/atlassian-confluence:5.8.10</span><br></pre></td></tr></table></figure>
-<h1 id="启动confluence"><a href="#启动confluence" class="headerlink" title="启动confluence"></a>启动confluence</h1><p>1./opt/run_confluence.sh</p>
-<p>2.使用浏览器打开192.168.0.93:8090,选择Production Installation，并占击Next<br><img src="/assets/markdown-img-paste-20180814140754458.png" alt="access_confluence_page1"></p>
-<p>3.记录下Server ID,如：BI31-0PSH-5SYG-6OX8<br>4.暂时停止confluence<br>docker stop confluence-container</p>
-<p>5.查找docker中的atlassian-extras-decoder-v2-3.2.jar<br>find /data/docker/local-storage/docker/ -name “atlassian-extras-decoder-v2-3.2.jar”</p>
-<p>/data/docker/local-storage/docker/aufs/diff/983d62f805befea70fd9c46019a356e3c762b9c929c20ec6c5c37ec0855b091b/usr/local/atlassian/confluence/confluence/WEB-INF/lib/atlassian-extras-decoder-v2-3.2.jar</p>
-<h1 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h1><p>1.重命名atlassian-extras-decoder-v2-3.2.jar为 atlassian-extras-2.4.jar<br>2.解压confluence5.1-crack.zip<br>进入confluence5.1-crack/iNViSiBLE$，执行：keygen.sh</p>
-<p>3.输入name:test1234,这个可以随意，输入之前记录的Server ID</p>
-<p>4.把重新生成的文件重命名，并替换回原路径</p>
-<p>5.单击复制key到剪贴板</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AAABMA0ODAoPeJxtkMlqwzAQQO/6CkHPCl6SxgQEVWzRmnoJtVOao+JOUoGjBC2m+fsqcX0phbnM9</span><br><span class="line">ngzD60DzNwRh3MfqzhZRUucNi2OgjBBGZhOy4uVZ0XTszr0DlQHqHKnPej6sDWgDSUhSjWI21AmL</span><br><span class="line">NDbJgkSEs6R37Gis5U4AbVgbBjFc9R50MxX5eCL2sE0xUsheyrVII3c9/BkOlAwUz3ig+jdnU8Po</span><br><span class="line">jcwEgrp+wba6wXu/LQuS/6W5qxAHqQsKOFd+fdF6uvoFcdLEkYkWoyA6Yq0d8aCrs6fYGiAGl7RX</span><br><span class="line">b3FJXvluOSY4YZleMOqjM1QrY9CSTPKyOpdNnJdcNxyVqIG9AA6z+g6j0MSbJoXsmh2z+Sx/kjQr</span><br><span class="line">63vFnk2Zf/LbZzuvoSBP8/8ATV6iRMwLAIUC/RpFxXPfEauHjG2QJ3yZ3rukxICFCHDIGkAmCgee</span><br><span class="line">NteYVIYb725rgNrX02f7</span><br></pre></td></tr></table></figure>
-<p>6.启动conflucen,打开<a href="http://ip:8090,填写上一步复制的key" target="_blank" rel="noopener">http://ip:8090,填写上一步复制的key</a><br>7.本文只是记录安装体验过程，商业用途请支持正版</p>
+        <h2 id="gin非0取值注意："><a href="#gin非0取值注意：" class="headerlink" title="gin非0取值注意："></a>gin非0取值注意：</h2><p>如果想取bool类型的false,string类型的空字符串时，不能使用required<br>而应该用exist,否则会报数据未提交上来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type AdminRoleJson struct &#123;</span><br><span class="line">	RoleName   string                          `json:&quot;role_name&quot; binding:&quot;required&quot;`</span><br><span class="line">	Remark     string                          `json:&quot;remark&quot; binding:&quot;exist&quot;`</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>断言成功，则返回一个所断言的类型对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claims，ok := user.(*util.Claims) //断言</span><br></pre></td></tr></table></figure></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 rootid@126.com </span>
@@ -487,12 +456,12 @@
 
 
 <div class="article_copyright">
-    <p><span>文章标题:</span>install confluence</p>
+    <p><span>文章标题:</span></p>
     
     <p><span>本文作者:</span><a href="javascript:void(0)" title="Shawn">Shawn</a></p>
-    <p><span>发布时间:</span>2017-03-23, 15:13:47</p>
-    <p><span>最后更新:</span>2019-07-30, 17:24:30</p>
-    <span>原始链接:</span><a class="post-url" href="/2017/03/23/tools/install-confluence/" title="install confluence">https://gitrootid.github.io/2017/03/23/tools/install-confluence/</a>
+    <p><span>发布时间:</span>2019-08-09, 18:05:37</p>
+    <p><span>最后更新:</span>2019-08-09, 18:05:37</p>
+    <span>原始链接:</span><a class="post-url" href="/2019/08/09/golang/gin的一些总结/" title>https://gitrootid.github.io/2019/08/09/golang/gin的一些总结/</a>
     <p>
         <span>版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
